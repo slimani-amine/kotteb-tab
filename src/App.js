@@ -10,6 +10,8 @@ import { TeenyiconsMenuSolid } from './Icons/Icons'
 
 import { Loader } from './Components/Loader'
 
+import { useDateTime } from './Hooks/useDateTime'
+
 export default function App() {
 	const [selectedImage, setSelectedImage] = useState(() =>
 		JSON.parse(localStorage.getItem('selectedImage'))
@@ -20,7 +22,9 @@ export default function App() {
 
 	const [loading, setLoading] = useState(false)
 
-	console.log(displayHeader)
+	const { date } = useDateTime()
+
+	const [dateNow, timeNow] = date
 
 	localStorage.setItem('selectedImage', JSON.stringify(selectedImage))
 
@@ -59,7 +63,6 @@ export default function App() {
 			setTimeout(() => setLoading(false), 2000)
 		}
 	}
-	console.log(window.NetworkInformation)
 
 	const clickImgHandler = img => {
 		if (img.id === selectedImage.id) {
@@ -77,7 +80,7 @@ export default function App() {
 	}, [])
 
 	return (
-		<div className='grid bg-black '>
+		<div className='grid bg-black font-mono'>
 			{loading && <Loader />}
 			<header
 				className={`${
@@ -108,7 +111,7 @@ export default function App() {
 						} w-full `}
 					/>
 
-					<div>
+					<section>
 						<TeenyiconsMenuSolid
 							width='1.5rem'
 							height='1.5rem'
@@ -116,7 +119,13 @@ export default function App() {
 							className='mt-5 mr-5 ml-auto cursor-pointer'
 							onClick={() => setDisplayHeader(prev => !prev)}
 						/>
-					</div>
+						<div></div>
+						<div className='text-white'>
+							<p className='text-2xl ml-2'>
+								{dateNow}, {timeNow}
+							</p>
+						</div>
+					</section>
 				</div>
 			</main>
 
