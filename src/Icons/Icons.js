@@ -9,3 +9,23 @@ export function TeenyiconsMenuSolid(props) {
 		</svg>
 	)
 }
+
+export function MdiFountainPen(props) {
+	return (
+		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
+			<path
+				fill={props.pathfill}
+				d='m6.95 14.93l4.24-5.66l8.49-7.07c.39-.39 1.04-.39 1.41 0l.71.71c.39.37.39 1.02 0 1.41l-7.07 8.49l-5.66 4.24l-2.12-2.12m1.41 2.83l-2.12-2.12l-2.83 1.41L2 21.29l2.12-2.12c.2-.17.51-.17.71 0c.17.2.17.51 0 .71L2.71 22l4.24-1.41l1.41-2.83Z'></path>
+		</svg>
+	)
+}
+
+export function IcTwotoneAdd(props) {
+	return (
+		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
+			<path
+				fill={props.pathfill}
+				d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'></path>
+		</svg>
+	)
+}

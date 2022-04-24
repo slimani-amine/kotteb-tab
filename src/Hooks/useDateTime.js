@@ -24,5 +24,7 @@ export function useDateTime() {
 		return () => clearInterval(timer)
 	})
 
-	return { date }
+	const [day, time] = date
+
+	return [day, time]
 }

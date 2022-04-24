@@ -1,16 +1,24 @@
-import { useEffect, useState } from 'react'
-
 import axios from 'axios'
+
+import { useEffect, useState } from 'react'
 
 import { URL } from './urls'
 
 import { v4 as uuid } from 'uuid'
 
-import { TeenyiconsMenuSolid } from './Icons/Icons'
+import {
+	TeenyiconsMenuSolid,
+	MdiFountainPen,
+	IcTwotoneAdd,
+} from './Icons/Icons'
 
 import { Loader } from './Components/Loader'
 
-import { useDateTime } from './Hooks/useDateTime'
+import { DateTime } from './Components/DateTime'
+
+import { Weather } from './Components/Weather'
+
+import { Quotes } from './Components/Quotes'
 
 export default function App() {
 	const [selectedImage, setSelectedImage] = useState(() =>
@@ -21,10 +29,6 @@ export default function App() {
 	const [displayHeader, setDisplayHeader] = useState(true)
 
 	const [loading, setLoading] = useState(false)
-
-	const { date } = useDateTime()
-
-	const [dateNow, timeNow] = date
 
 	localStorage.setItem('selectedImage', JSON.stringify(selectedImage))
 
@@ -110,20 +114,34 @@ export default function App() {
 							Boolean(displayHeader) ? 'h-85vh' : 'h-100vh'
 						} w-full `}
 					/>
-
-					<section>
-						<TeenyiconsMenuSolid
-							width='1.5rem'
-							height='1.5rem'
-							pathfill='white'
-							className='mt-5 mr-5 ml-auto cursor-pointer'
-							onClick={() => setDisplayHeader(prev => !prev)}
-						/>
-						<div></div>
-						<div className='text-white'>
-							<p className='text-2xl ml-2'>
-								{dateNow}, {timeNow}
-							</p>
+					<section className='flex'>
+						<div className='self-end m-3 w-1/2'>
+							<Weather />
+							<DateTime />
+						</div>
+						<div className='flex flex-col items-end w-1/2 h-full'>
+							<div>
+								<TeenyiconsMenuSolid
+									width='1.5rem'
+									height='1.5rem'
+									pathfill='white'
+									className='mt-5 mr-5  cursor-pointer'
+									onClick={() => setDisplayHeader(prev => !prev)}
+								/>
+								<IcTwotoneAdd
+									width='1.5rem'
+									height='1.5rem'
+									pathfill='white'
+									className='mt-5 mr-5  cursor-pointer'
+								/>
+								<MdiFountainPen
+									width='1.5rem'
+									height='1.5rem'
+									pathfill='white'
+									className='mt-5 mr-5  cursor-pointer'
+								/>
+							</div>
+							<Quotes />
 						</div>
 					</section>
 				</div>
