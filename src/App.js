@@ -6,11 +6,21 @@ import { URL } from './urls'
 
 import { v4 as uuid } from 'uuid'
 
+import { TeenyiconsMenuSolid } from './Icons/Icons'
+
+import { Loader } from './Components/Loader'
+
 export default function App() {
 	const [selectedImage, setSelectedImage] = useState(() =>
 		JSON.parse(localStorage.getItem('selectedImage'))
 	)
 	const [nebulaImages, setNebulaImages] = useState()
+
+	const [displayHeader, setDisplayHeader] = useState(true)
+
+	const [loading, setLoading] = useState(false)
+
+	console.log(displayHeader)
 
 	localStorage.setItem('selectedImage', JSON.stringify(selectedImage))
 
@@ -18,33 +28,46 @@ export default function App() {
 		Boolean(pageNo) ? `${URL}&&page=${pageNo}&&per_page=${9}` : URL
 
 	async function imageFetcher(pageNo) {
-		console.log(pageNo, imageURL(pageNo))
 		const response = await axios.get(imageURL(pageNo))
+
 		const data = await response.data.results
 
 		const results = data.map(img => ({
 			...img.urls,
 			id: uuid(),
 		}))
+
 		return results
 	}
 
 	async function getImages() {
 		if (selectedImage) {
 			const pageNo = Math.floor(Math.random() * 200) + 1
+
 			const fetchedImages = await imageFetcher(pageNo)
+
 			setNebulaImages([selectedImage, ...fetchedImages])
 		} else {
 			const fetchedImages = await imageFetcher(false)
 
-			console.log(fetchedImages[0])
-
 			setNebulaImages(fetchedImages)
 
-			localStorage.setItem(
-				'selectedImage',
-				JSON.stringify(fetchedImages[0])
-			)
+			setLoading(true)
+
+			setSelectedImage(fetchedImages[0])
+
+			setTimeout(() => setLoading(false), 2000)
+		}
+	}
+	console.log(window.NetworkInformation)
+
+	const clickImgHandler = img => {
+		if (img.id === selectedImage.id) {
+			return null
+		} else {
+			setLoading(true)
+			setSelectedImage(img)
+			setTimeout(() => setLoading(false), 2000)
 		}
 	}
 
@@ -53,31 +76,54 @@ export default function App() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	console.log(selectedImage)
 	return (
 		<div className='grid bg-black '>
-			<header className='grid grid-cols-10 gap-1 h-14vh order-1'>
+			{loading && <Loader />}
+			<header
+				className={`${
+					Boolean(!displayHeader)
+						? 'hidden'
+						: 'grid grid-cols-10 gap-1 h-13vh order-1 mt-2'
+				} `}>
 				{nebulaImages?.map(img => (
-					<button onClick={() => setSelectedImage(img)}>
+					<button onClick={() => clickImgHandler(img)}>
 						<img
 							src={img.thumb}
-							alt={img.thumb}
+							alt='header-imgs'
 							loading='eager'
-							className='aspect-square h-full w-full'
+							className='aspect-square h-full w-full z-10 hover:scale-100'
 						/>
 					</button>
 				))}
 			</header>
+
 			<main className='order-3'>
 				<div className='grid children:row-span-full children:col-span-full'>
 					<img
-						src={selectedImage.regular}
+						src={selectedImage.full}
 						alt='bg-img'
-						className='h-85vh w-full'
+						loading='eager'
+						className={`${
+							Boolean(displayHeader) ? 'h-85vh' : 'h-100vh'
+						} w-full `}
 					/>
+
+					<div>
+						<TeenyiconsMenuSolid
+							width='1.5rem'
+							height='1.5rem'
+							pathfill='white'
+							className='mt-5 mr-5 ml-auto cursor-pointer'
+							onClick={() => setDisplayHeader(prev => !prev)}
+						/>
+					</div>
 				</div>
 			</main>
-			<footer className='order-2 h-1vh bg-black'></footer>
+
+			<footer
+				className={`${
+					Boolean(displayHeader) ? 'order-2 h-1vh bg-black' : 'hidden'
+				}`}></footer>
 		</div>
 	)
 }

@@ -3,9 +3,13 @@ module.exports = {
 	theme: {
 		extend: {
 			height: {
-				'14vh': '14vh',
+				'13vh': '13vh',
 				'85vh': '85vh',
-				'1vh': '1vh',
+				'1vh': '0.65vh',
+				'100vh': '100vh',
+			},
+			width: {
+				'100vw': '100vw',
 			},
 		},
 	},
