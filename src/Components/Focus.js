@@ -31,7 +31,7 @@ export const Focus = () => {
 						<input
 							id='focus-input'
 							className='p-1 text-white w-full bg-inherit '
-							value={focus}
+							value={focus === null ? '' : focus}
 							onChange={e => setFocus(e.target.value)}
 							autoComplete='off'
 							placeholder='Focus of the day'

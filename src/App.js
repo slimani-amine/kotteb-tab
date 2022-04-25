@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { URL } from './urls'
 
+import { v4 as uuid } from 'uuid'
+
 import { TeenyiconsMenuSolid } from './Icons/Icons'
 
 import {
@@ -38,6 +40,7 @@ export default function App() {
 
 		const results = data.map(img => ({
 			...img.urls,
+			id: uuid(),
 		}))
 
 		return results
@@ -102,7 +105,7 @@ export default function App() {
 			<main className='order-3'>
 				<div className='grid children:row-span-full children:col-span-full'>
 					<img
-						src={selectedImage.regular}
+						src={selectedImage?.regular}
 						alt='bg-img'
 						loading='eager'
 						className={`${
