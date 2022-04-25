@@ -1,6 +1,7 @@
 export function TeenyiconsMenuSolid(props) {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 15 15' {...props}>
+			<title>Toggle Menu</title>
 			<path
 				fill={props.pathfill}
 				fillRule='evenodd'
@@ -13,6 +14,7 @@ export function TeenyiconsMenuSolid(props) {
 export function MdiFountainPen(props) {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
+			<title>Todo</title>
 			<path
 				fill={props.pathfill}
 				d='m6.95 14.93l4.24-5.66l8.49-7.07c.39-.39 1.04-.39 1.41 0l.71.71c.39.37.39 1.02 0 1.41l-7.07 8.49l-5.66 4.24l-2.12-2.12m1.41 2.83l-2.12-2.12l-2.83 1.41L2 21.29l2.12-2.12c.2-.17.51-.17.71 0c.17.2.17.51 0 .71L2.71 22l4.24-1.41l1.41-2.83Z'></path>
@@ -23,6 +25,7 @@ export function MdiFountainPen(props) {
 export function IcTwotoneAdd(props) {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
+			<title>Reminders</title>
 			<path
 				fill={props.pathfill}
 				d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'></path>
@@ -33,6 +36,7 @@ export function IcTwotoneAdd(props) {
 export function RiFocus2Line(props) {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
+			<title>Today's Focus</title>
 			<path
 				fill={props.pathfill}
 				d='M12 20a8 8 0 1 0 0-16a8 8 0 0 0 0 16zm0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10zm0-6a4 4 0 1 0 0-8a4 4 0 0 0 0 8zm0 2a6 6 0 1 1 0-12a6 6 0 0 1 0 12zm0-4a2 2 0 1 1 0-4a2 2 0 0 1 0 4z'></path>
@@ -43,6 +47,7 @@ export function RiFocus2Line(props) {
 export function IcTwotoneCheckCircle(props) {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
+			<title>Save</title>
 			<path
 				fill={props.pathfill}
 				d='M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8zm-2 13l-4-4l1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z'
@@ -57,6 +62,7 @@ export function IcTwotoneCheckCircle(props) {
 export function OouiTrash(props) {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 20 20' {...props}>
+			<title>Remove</title>
 			<path
 				fill={props.pathfill}
 				d='M17 2h-3.5l-1-1h-5l-1 1H3v2h14zM4 17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5H4z'></path>

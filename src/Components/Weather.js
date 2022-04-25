@@ -35,14 +35,15 @@ export const Weather = () => {
 				<div className='text-xl'>
 					<span>
 						{weatherData.weather.map((data, idx) => (
-							<div key={idx}>
+							<>
 								<img
 									src={`http://openweathermap.org/img/wn/${data.icon}.png`}
 									alt={data.description}
 									className='inline'
+									key={idx}
 								/>
 								<span>...{data.description} </span>
-							</div>
+							</>
 						))}
 					</span>
 					<span>{weatherData.name}, </span>
