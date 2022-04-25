@@ -2,11 +2,11 @@ import axios from 'axios'
 
 import { useEffect, useState } from 'react'
 
-import { URL } from './urls'
+import { URL } from './Urls/index'
 
 import { v4 as uuid } from 'uuid'
 
-import { TeenyiconsMenuSolid } from './Icons/Icons'
+import { TeenyiconsMenuSolid } from './Icons'
 
 import {
 	Loader,

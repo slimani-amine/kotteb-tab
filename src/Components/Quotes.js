@@ -1,15 +1,18 @@
 import axios from 'axios'
+
 import { Fragment, useEffect, useState } from 'react'
 
-import { QUOTES_URL } from './../urls'
+import { QUOTES_URL } from '../Urls/index'
 
 export const Quotes = () => {
 	const [quote, setQuote] = useState()
+
 	const [error, setError] = useState()
 
 	async function getRandomQuotes() {
 		try {
 			const response = await axios.get(QUOTES_URL)
+
 			setQuote(response.data)
 		} catch (error) {
 			setError(error)
@@ -19,6 +22,7 @@ export const Quotes = () => {
 	useEffect(() => {
 		getRandomQuotes()
 	}, [])
+
 	return (
 		<Fragment>
 			{!error && (

@@ -1,4 +1,4 @@
-import { MdiFountainPen } from './../Icons/Icons'
+import { MdiFountainPen } from '../Icons'
 
 export const Todos = () => {
 	return (
