@@ -4,21 +4,17 @@ import { useEffect, useState } from 'react'
 
 import { URL } from './urls'
 
-import { v4 as uuid } from 'uuid'
+import { TeenyiconsMenuSolid } from './Icons/Icons'
 
 import {
-	TeenyiconsMenuSolid,
-	MdiFountainPen,
-	IcTwotoneAdd,
-} from './Icons/Icons'
-
-import { Loader } from './Components/Loader'
-
-import { DateTime } from './Components/DateTime'
-
-import { Weather } from './Components/Weather'
-
-import { Quotes } from './Components/Quotes'
+	Loader,
+	DateTime,
+	Weather,
+	Quotes,
+	Reminders,
+	Todos,
+	Focus,
+} from './Components'
 
 export default function App() {
 	const [selectedImage, setSelectedImage] = useState(() =>
@@ -42,7 +38,6 @@ export default function App() {
 
 		const results = data.map(img => ({
 			...img.urls,
-			id: uuid(),
 		}))
 
 		return results
@@ -74,7 +69,7 @@ export default function App() {
 		} else {
 			setLoading(true)
 			setSelectedImage(img)
-			setTimeout(() => setLoading(false), 2000)
+			setTimeout(() => setLoading(false), 1000)
 		}
 	}
 
@@ -92,8 +87,8 @@ export default function App() {
 						? 'hidden'
 						: 'grid grid-cols-10 gap-1 h-13vh order-1 mt-2'
 				} `}>
-				{nebulaImages?.map(img => (
-					<button onClick={() => clickImgHandler(img)}>
+				{nebulaImages?.map((img, idx) => (
+					<button key={idx} onClick={() => clickImgHandler(img)}>
 						<img
 							src={img.thumb}
 							alt='header-imgs'
@@ -107,7 +102,7 @@ export default function App() {
 			<main className='order-3'>
 				<div className='grid children:row-span-full children:col-span-full'>
 					<img
-						src={selectedImage.full}
+						src={selectedImage.regular}
 						alt='bg-img'
 						loading='eager'
 						className={`${
@@ -128,20 +123,13 @@ export default function App() {
 									className='mt-5 mr-5  cursor-pointer'
 									onClick={() => setDisplayHeader(prev => !prev)}
 								/>
-								<IcTwotoneAdd
-									width='1.5rem'
-									height='1.5rem'
-									pathfill='white'
-									className='mt-5 mr-5  cursor-pointer'
-								/>
-								<MdiFountainPen
-									width='1.5rem'
-									height='1.5rem'
-									pathfill='white'
-									className='mt-5 mr-5  cursor-pointer'
-								/>
+								<Reminders />
+								<Todos />
 							</div>
-							<Quotes />
+							<div className='text-white text-xl mt-auto mr-2 self-end mb-4 grid'>
+								<Focus />
+								<Quotes />
+							</div>
 						</div>
 					</section>
 				</div>

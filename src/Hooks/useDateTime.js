@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react'
 
+/**
+ * hook uses Date object
+ *
+ * @returns date(long format) and time(12hrs Format including seconds)
+ *
+ */
+
 export function useDateTime() {
 	const event = new Date()
 

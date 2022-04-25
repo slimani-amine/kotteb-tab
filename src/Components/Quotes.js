@@ -19,7 +19,7 @@ export const Quotes = () => {
 		getRandomQuotes()
 	}, [])
 	return (
-		<p className='text-white text-xl mt-auto mr-1 self-end  mb-4 '>
+		<p>
 			{quote?.content} --{quote?.author}
 		</p>
 	)

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { useGeoLocation } from '../Hooks/useGeoLocation'
+import { useGeoLocation } from '../Hooks'
 
 import { useEffect, useState } from 'react'
 
@@ -24,8 +24,6 @@ export const Weather = () => {
 		}
 	}
 
-	console.log(weatherData)
-
 	useEffect(() => {
 		getWeatherData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,22 +34,21 @@ export const Weather = () => {
 			{Boolean(weatherData && !error) && (
 				<div className='text-xl'>
 					<span>
-						{weatherData.weather.map(data => (
-							<>
+						{weatherData.weather.map((data, idx) => (
+							<div key={idx}>
 								<img
 									src={`http://openweathermap.org/img/wn/${data.icon}.png`}
 									alt={data.description}
 									className='inline'
 								/>
 								<span>...{data.description} </span>
-							</>
+							</div>
 						))}
 					</span>
 					<span>{weatherData.name}, </span>
 					<span>
 						{(weatherData.main.temp - 273.15).toFixed(2)}°C{' '}
 					</span>
-					{/* <img className='in' alt={weatherData.}/> */}
 				</div>
 			)}
 		</section>
