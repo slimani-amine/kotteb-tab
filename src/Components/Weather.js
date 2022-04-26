@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { useAxios, useGeoLocation } from '../Hooks'
 
 import { WEATHER_API } from '../Urls/index'
@@ -18,9 +20,9 @@ export const Weather = () => {
 		<section className='text-white ml-2'>
 			{Boolean(weatherData && !weatherError && !loading) && (
 				<div className='text-xl'>
-					<span>
+					<Fragment>
 						{weatherData.weather.map((data, idx) => (
-							<>
+							<Fragment>
 								<img
 									src={`http://openweathermap.org/img/wn/${data.icon}.png`}
 									alt={data.description}
@@ -28,9 +30,9 @@ export const Weather = () => {
 									key={idx}
 								/>
 								<span>...{data.description} </span>
-							</>
+							</Fragment>
 						))}
-					</span>
+					</Fragment>
 					<span>{weatherData.name}, </span>
 					<span>
 						{(weatherData.main.temp - 273.15).toFixed(2)}°C{' '}
