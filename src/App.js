@@ -1,4 +1,4 @@
-import { useAxios } from './Hooks'
+import { useAxios, useLocalStorage } from './Hooks'
 
 import { useEffect, useState } from 'react'
 
@@ -19,8 +19,9 @@ import {
 } from './Components'
 
 export default function App() {
-	const [selectedImage, setSelectedImage] = useState(() =>
-		JSON.parse(localStorage.getItem('selectedImage'))
+	const [selectedImage, setSelectedImage] = useLocalStorage(
+		'selectedImage',
+		''
 	)
 	const [nebulaImages, setNebulaImages] = useState([])
 
@@ -39,14 +40,9 @@ export default function App() {
 
 		if (!selectedImage) {
 			setSelectedImage(fetchedImages?.[0])
-
-			localStorage.setItem(
-				'selectedImage',
-				JSON.stringify(fetchedImages?.[0])
-			)
 		}
-		setNebulaImages(fetchedImages)
 
+		setNebulaImages(fetchedImages)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [response])
 
@@ -56,8 +52,6 @@ export default function App() {
 		}
 
 		setSelectedImage(img)
-
-		localStorage.setItem('selectedImage', JSON.stringify(img))
 
 		const remaningImages = nebulaImages.filter(
 			images => images.id !== img.id
