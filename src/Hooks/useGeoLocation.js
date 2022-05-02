@@ -17,8 +17,8 @@ export const useGeoLocation = () => {
 		() =>
 			navigator.geolocation.getCurrentPosition(pos =>
 				setGeoArea({
-					latitude: pos.coords.latitude,
-					longitude: pos.coords.longitude,
+					latitude: pos.coords.latitude.toFixed(2),
+					longitude: pos.coords.longitude.toFixed(2),
 				})
 			),
 		[]

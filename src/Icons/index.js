@@ -1,4 +1,4 @@
-export function TeenyiconsMenuSolid(props) {
+const TeenyiconsMenuSolid = props => {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 15 15' {...props}>
 			<title>Toggle Menu</title>
@@ -11,7 +11,7 @@ export function TeenyiconsMenuSolid(props) {
 	)
 }
 
-export function MdiFountainPen(props) {
+const MdiFountainPen = props => {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
 			<title>Todo</title>
@@ -22,7 +22,7 @@ export function MdiFountainPen(props) {
 	)
 }
 
-export function IcTwotoneAdd(props) {
+const IcTwotoneAdd = props => {
 	return (
 		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
 			<title>Reminders</title>
@@ -33,23 +33,31 @@ export function IcTwotoneAdd(props) {
 	)
 }
 
-export function RiFocus2Line(props) {
+const RiFocus2Line = props => {
 	return (
-		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
-			<title>Today's Focus</title>
+		<svg
+			width='2.5rem'
+			height='2.5rem'
+			viewBox='0 0 24 24'
+			{...props}>
+			<title>Clear Focus</title>
 			<path
-				fill={props.pathfill}
+				fill='white'
 				d='M12 20a8 8 0 1 0 0-16a8 8 0 0 0 0 16zm0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10zm0-6a4 4 0 1 0 0-8a4 4 0 0 0 0 8zm0 2a6 6 0 1 1 0-12a6 6 0 0 1 0 12zm0-4a2 2 0 1 1 0-4a2 2 0 0 1 0 4z'></path>
 		</svg>
 	)
 }
 
-export function IcTwotoneCheckCircle(props) {
+const IcTwotoneCheckCircle = props => {
 	return (
-		<svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
+		<svg
+			width='1.5rem'
+			height='1.5rem'
+			viewBox='0 0 24 24'
+			{...props}>
 			<title>Save</title>
 			<path
-				fill={props.pathfill}
+				fill='white'
 				d='M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8zm-2 13l-4-4l1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z'
 				opacity='.3'></path>
 			<path
@@ -59,13 +67,26 @@ export function IcTwotoneCheckCircle(props) {
 	)
 }
 
-export function OouiTrash(props) {
+const OouiTrash = props => {
 	return (
-		<svg width='1em' height='1em' viewBox='0 0 20 20' {...props}>
+		<svg
+			width='1.5rem'
+			height='1.5rem'
+			viewBox='0 0 20 20'
+			{...props}>
 			<title>Remove</title>
 			<path
-				fill={props.pathfill}
+				fill='white'
 				d='M17 2h-3.5l-1-1h-5l-1 1H3v2h14zM4 17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5H4z'></path>
 		</svg>
 	)
+}
+
+export {
+	OouiTrash,
+	IcTwotoneCheckCircle,
+	RiFocus2Line,
+	IcTwotoneAdd,
+	MdiFountainPen,
+	TeenyiconsMenuSolid,
 }

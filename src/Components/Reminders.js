@@ -1,4 +1,4 @@
-import { IcTwotoneAdd } from './../Icons/Icons'
+import { IcTwotoneAdd } from '../Icons'
 
 export const Reminders = () => {
 	return (

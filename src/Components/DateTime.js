@@ -1,4 +1,4 @@
-import { useDateTime } from './../Hooks'
+import { useDateTime } from '../Hooks'
 
 export const DateTime = () => {
 	const [dateNow, timeNow] = useDateTime()

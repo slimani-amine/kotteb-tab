@@ -1,12 +1,12 @@
-import axios from 'axios'
+import { useAxios, useLocalStorage } from './Hooks'
 
 import { useEffect, useState } from 'react'
 
-import { URL } from './urls'
+import { UNSPLASH_API } from './Urls/index'
 
 import { v4 as uuid } from 'uuid'
 
-import { TeenyiconsMenuSolid } from './Icons/Icons'
+import { TeenyiconsMenuSolid } from './Icons'
 
 import {
 	Loader,
@@ -19,71 +19,51 @@ import {
 } from './Components'
 
 export default function App() {
-	const [selectedImage, setSelectedImage] = useState(() =>
-		JSON.parse(localStorage.getItem('selectedImage'))
+	const [selectedImage, setSelectedImage] = useLocalStorage(
+		'selectedImage',
+		''
 	)
-	const [nebulaImages, setNebulaImages] = useState()
+	const [nebulaImages, setNebulaImages] = useState([])
 
 	const [displayHeader, setDisplayHeader] = useState(true)
 
-	const [loading, setLoading] = useState(false)
+	const [response, loading, error] = useAxios({
+		method: 'get',
+		url: UNSPLASH_API,
+	})
 
-	localStorage.setItem('selectedImage', JSON.stringify(selectedImage))
-
-	const imageURL = pageNo =>
-		Boolean(pageNo) ? `${URL}&&page=${pageNo}&&per_page=${9}` : URL
-
-	async function imageFetcher(pageNo) {
-		const response = await axios.get(imageURL(pageNo))
-
-		const data = await response.data.results
-
-		const results = data.map(img => ({
+	useEffect(() => {
+		const fetchedImages = response?.results?.map(img => ({
 			...img.urls,
 			id: uuid(),
 		}))
 
-		return results
-	}
-
-	async function getImages() {
-		if (selectedImage) {
-			const pageNo = Math.floor(Math.random() * 200) + 1
-
-			const fetchedImages = await imageFetcher(pageNo)
-
-			setNebulaImages([selectedImage, ...fetchedImages])
-		} else {
-			const fetchedImages = await imageFetcher(false)
-
-			setNebulaImages(fetchedImages)
-
-			setLoading(true)
-
-			setSelectedImage(fetchedImages[0])
-
-			setTimeout(() => setLoading(false), 2000)
+		if (!selectedImage) {
+			setSelectedImage(fetchedImages?.[0])
 		}
-	}
+
+		setNebulaImages(fetchedImages)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [response])
 
 	const clickImgHandler = img => {
 		if (img.id === selectedImage.id) {
 			return null
-		} else {
-			setLoading(true)
-			setSelectedImage(img)
-			setTimeout(() => setLoading(false), 1000)
 		}
-	}
 
-	useEffect(() => {
-		getImages()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		setSelectedImage(img)
+
+		const remaningImages = nebulaImages.filter(
+			images => images.id !== img.id
+		)
+
+		setNebulaImages([img, ...remaningImages])
+	}
 
 	return (
 		<div className='grid bg-black font-mono'>
-			{loading && <Loader />}
+			{!error && loading && <Loader />}
+
 			<header
 				className={`${
 					Boolean(!displayHeader)
@@ -112,11 +92,13 @@ export default function App() {
 							Boolean(displayHeader) ? 'h-85vh' : 'h-100vh'
 						} w-full `}
 					/>
+
 					<section className='flex'>
 						<div className='self-end m-3 w-1/2'>
 							<Weather />
 							<DateTime />
 						</div>
+
 						<div className='flex flex-col items-end w-1/2 h-full'>
 							<div>
 								<TeenyiconsMenuSolid
@@ -126,11 +108,15 @@ export default function App() {
 									className='mt-5 mr-5  cursor-pointer'
 									onClick={() => setDisplayHeader(prev => !prev)}
 								/>
+
 								<Reminders />
+
 								<Todos />
 							</div>
+
 							<div className='text-white text-xl mt-auto mr-2 self-end mb-4 grid'>
 								<Focus />
+
 								<Quotes />
 							</div>
 						</div>
