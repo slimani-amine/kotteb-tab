@@ -1,8 +1,10 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "manifest_version": 1,
+  "author": "Bipul Sharma",
+  "name": "Next Tab",
+  "version": "1.0",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": ["geolocation"]
 }
