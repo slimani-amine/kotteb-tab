@@ -6,7 +6,7 @@ import { UNSPLASH_API } from './Urls/index'
 
 import { v4 as uuid } from 'uuid'
 
-import { TeenyiconsMenuSolid } from './Icons'
+import { TeenyiconsMenuSolid } from './Icons/index.tsx'
 
 import {
 	Loader,

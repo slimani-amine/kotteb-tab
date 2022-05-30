@@ -16,13 +16,17 @@ export const Weather = () => {
 		url: SUPER_WEATHER_API,
 	})
 
+	// console.log(weatherData)
+
 	return (
 		<section className='text-white ml-2'>
 			{Boolean(weatherData && !weatherError && !loading) && (
 				<div className='text-xl'>
 					<Fragment>
 						{weatherData.weather.map((data, idx) => (
-							<Fragment>
+							<Fragment key={idx}>
+								{console.log(data)}
+
 								<img
 									src={`http://openweathermap.org/img/wn/${data.icon}.png`}
 									alt={data.description}

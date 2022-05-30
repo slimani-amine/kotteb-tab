@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
  */
 
 export function useDateTime() {
-	const event = new Date()
+	const event: Date = new Date()
 
 	const today = event
 		.toLocaleDateString('en-us', {
@@ -24,7 +24,7 @@ export function useDateTime() {
 
 	const newDate = [today, timeNow]
 
-	const [date, setDate] = useState(newDate)
+	const [date, setDate] = useState <string[]>(newDate)
 
 	useEffect(() => {
 		const timer = setInterval(() => setDate(newDate), 1000)

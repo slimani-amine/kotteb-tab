@@ -6,23 +6,32 @@
  *
  */
 
-import axios from 'axios'
+import axios, {Method, AxiosResponse, AxiosError} from 'axios'
 
 import { useState, useEffect } from 'react'
 
-export const useAxios = params => {
-	const { method, url } = params
+interface props {
+	method : Method,
+	url: string,
+}
 
-	const [data, setData] = useState({
+interface axiosState{
+	response?:object|undefined,
+	loading?: Boolean,
+	error?: AxiosError|undefined|unknown,
+}
+
+export const useAxios = ({ method, url } : props) : [response?: object, loading?: Boolean, error?: object|unknown]=> {
+	const [data, setData] = useState<axiosState>({
 		response: undefined,
 		loading: true,
-		error: '',
+		error: undefined,
 	})
 
-	async function action(params) {
+	async function action({ method, url }: props) {
 		try {
-			const res = await axios.request(params)
-			setData(prev => ({ ...prev, response: res.data }))
+			const res : AxiosResponse= await axios.request({ method, url })
+				setData(prev => ({ ...prev, response: res.data }))
 		} catch (error) {
 			console.log(error) //For future reference
 			setData(prev => ({ ...prev, error: error }))
@@ -35,7 +44,7 @@ export const useAxios = params => {
 	}
 
 	useEffect(() => {
-		action(params)
+		action({ method, url })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [method, url])
 
