@@ -6,19 +6,19 @@
  *
  */
 
-import axios, {Method, AxiosResponse, AxiosError} from 'axios'
+import axios, {Method, AxiosError} from 'axios'
 
 import { useState, useEffect } from 'react'
 
 interface props {
-	method : Method,
-	url: string,
+	method : Method;
+	url: string;
 }
 
 interface axiosState{
-	response?:object|undefined,
-	loading?: Boolean,
-	error?: AxiosError|undefined|unknown,
+	response?:object|undefined;
+	loading?: Boolean;
+	error?: AxiosError|undefined|unknown;
 }
 
 export const useAxios = ({ method, url } : props) : [response?: object, loading?: Boolean, error?: object|unknown]=> {
@@ -30,7 +30,7 @@ export const useAxios = ({ method, url } : props) : [response?: object, loading?
 
 	async function action({ method, url }: props) {
 		try {
-			const res : AxiosResponse= await axios.request({ method, url })
+			const res = await axios.request({ method, url })
 				setData(prev => ({ ...prev, response: res.data }))
 		} catch (error) {
 			console.log(error) //For future reference

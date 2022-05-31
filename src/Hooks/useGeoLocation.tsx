@@ -7,8 +7,8 @@ import { useState, useEffect } from 'react'
  *
  */
 interface GeoLocation {
-	latitude: string  | number,
-	longitude: string | number,
+	latitude: string  | number;
+	longitude: string | number;
 }
 
 
