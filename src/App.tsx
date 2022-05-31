@@ -67,7 +67,6 @@ export default function App() {
 			id: uuid(),
 		}))
 
-		console.log(fetchedImages)
 
 		if (!selectedImage) {
 			setSelectedImage(fetchedImages?.[0])
@@ -130,8 +129,8 @@ export default function App() {
 							<DateTime />
 						</div>
 
-						<div className='flex flex-col items-end w-1/2 h-full'>
-							<div>
+						<div className='flex flex-col items-end w-1/2 h-full justify-between'>
+							<div className='h-3/4 w-full flex flex-col items-end'>
 								<TeenyiconsMenuSolid
 									width='1.5rem'
 									height='1.5rem'
@@ -144,7 +143,7 @@ export default function App() {
 								<Todos />
 							</div>
 
-							<div className='text-white text-xl mt-auto mr-2 self-end mb-4 grid'>
+							<div className='text-white text-xl mt-auto mr-2 self-end  grid h-1/4'>
 								<Focus />
 
 								<Quotes />
