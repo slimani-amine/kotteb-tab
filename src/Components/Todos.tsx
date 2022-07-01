@@ -38,7 +38,6 @@ export const Todos = () => {
 		setTodos(prev  => prev.filter(todo => todo.id !== id))
 	}
 
-
 	return (
 		<div className={`${openModal && "w-full" } flex justify-between self-end h-full`} >
 				{openModal && (
