@@ -25,6 +25,7 @@ export const Todos = () => {
 		setTodo('')
 	}
 
+
 	const handleCheckbox = (id: string) => {
 		setTodos((prev) => 
 			prev.map(todo => 
@@ -39,7 +40,7 @@ export const Todos = () => {
 
 
 	return (
-		<div className={`${openModal && "w-full" } flex justify-between self-end h-full`}>
+		<div className={`${openModal && "w-full" } flex justify-between self-end h-full`} >
 				{openModal && (
 					<div className='bg-inherit backdrop-blur-xl w-full m-4 h-3/4 mt-5 p-4 flex flex-col justify-between'>
 						<div className='flex flex-col '>
@@ -61,12 +62,12 @@ export const Todos = () => {
 						</label>
 					</div>
 				)}
-			<MdiFountainPen
-				width='1.5rem'
-				height='1.5rem'
-				className='mt-5 mr-5 cursor-pointer'
-				onClick={() => setOpenModal(prev => !prev)}
-			/>
+				<MdiFountainPen
+					width='1.5rem'
+					height='1.5rem'
+					className='mt-5 mr-5 cursor-pointer'
+					onClick={()=>setOpenModal(prev=>!prev)}
+				/>
 		</div>
 	)
 }

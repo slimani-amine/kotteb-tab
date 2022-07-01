@@ -13,7 +13,6 @@ import {
 	DateTime,
 	Weather,
 	Quotes,
-	Reminders,
 	Todos,
 	Focus,
 } from './Components'
@@ -137,8 +136,6 @@ export default function App() {
 									className='mt-5 mr-5  cursor-pointer'
 									onClick={() => setDisplayHeader(prev => !prev)}
 								/>
-
-								<Reminders />
 
 								<Todos />
 							</div>
