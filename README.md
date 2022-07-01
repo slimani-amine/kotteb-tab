@@ -1,4 +1,5 @@
 ## Next Tab
+New tab page chrome extension to increase productivity of the user
   
 Made with React-TS and TailwindCSS
 
