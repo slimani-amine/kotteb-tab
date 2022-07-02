@@ -1,6 +1,4 @@
-## Next Tab
-
-[Link](https://chrome.google.com/webstore/detail/next-tab/efjcffckfcifpljbifjiipjpfmfklbdh)
+## Next Tab - [Link](https://chrome.google.com/webstore/detail/next-tab/efjcffckfcifpljbifjiipjpfmfklbdh)
 
 New tab page chrome extension to increase productivity of the user
   
