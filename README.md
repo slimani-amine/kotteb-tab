@@ -4,6 +4,7 @@ New tab page chrome extension to increase productivity of the user
   
 Made with React-TS and TailwindCSS
 
+- User Onboarding
 - Get new images on reload to select and save 
 - Saved images persists, you get new set every reload
 - Add todo, Un/Check todo, Delete todo, Clear all todos 
