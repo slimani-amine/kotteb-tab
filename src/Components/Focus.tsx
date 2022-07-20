@@ -9,15 +9,17 @@ export const Focus = () => {
 		<section className='flex'>
 			<label
 				htmlFor='focus-input'
-				className='bg-inherit w-11/12 h-fit mb-2 mr-2 border-2 border-solid border-white relative'>
-				<input
+				className= {`${focus ? 'border-0' : 'border-2 border-solid border-white '} bg-inherit w-11/12 h-fit mr-2 relative`}>
+				{focus ? <div><p>Focus of the day: </p><p>{focus}</p></div> : (
+					<input
 					id='focus-input'
-					className='p-1 text-white w-full bg-inherit'
-					value={focus}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFocus(e.target.value)}
+					className={`${focus && 'border-0'  } p-1 text-white w-full bg-inherit`}
+					onKeyDown={(e) => e.code === "Enter" && ((e.target)as HTMLInputElement).value !== '' && setFocus(((e.target)as HTMLInputElement).value)}
 					autoComplete='off'
 					placeholder='Focus of the day'
 				/>
+				)}
+				
 			</label>
 
 			<RiFocus2Line

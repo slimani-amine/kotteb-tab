@@ -1,6 +1,6 @@
 import { useAxios, useLocalStorage } from './Hooks'
 
-import { SetStateAction, useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState,useRef } from 'react'
 
 import { UNSPLASH_API } from './Urls/index'
 
@@ -44,6 +44,8 @@ export default function App() {
 		'selectedImage',
 		''
 	)
+
+	const [username, setUserName] = useLocalStorage('username','')
 
 	const selectedImage  = selectImage as unknown as fetchedImageType
 
@@ -89,8 +91,22 @@ export default function App() {
 		setNebulaImages([img, ...remaningImages])
 	}
 
+	const inputRef= useRef<HTMLInputElement>(null)
+
+	useEffect(() => {
+		inputRef?.current?.focus()
+	},[])
+
 	return (
 		<div className='grid bg-black font-mono'>
+			{!username && (
+				<div className='fixed w-[100vw] h-[100vh] backdrop-blur z-50 flex justify-center items-center flex-col'>
+					<div>
+						<h3 className='text-white font-thin text-2xl'>Hi welcome, please enter your name ?</h3>
+						<input name='username' type="text" className='w-full p-1 mt-2 bg-transparent border-none text-white'ref={inputRef} onKeyDown={(e) => e.code === "Enter" && ((e.target)as HTMLInputElement).value !== '' && setUserName(((e.target)as HTMLInputElement).value)}/>
+					</div>
+				</div>
+			)}
 			{!error && loading && <Loader />}
 
 			<header
@@ -124,6 +140,7 @@ export default function App() {
 
 					<section className='flex'>
 						<div className='self-end m-3 w-1/2'>
+							<h2 className='text-xl text-white ml-4'>Hello, {username}! Have a nice day.</h2>
 							<Weather />
 							<DateTime />
 						</div>
