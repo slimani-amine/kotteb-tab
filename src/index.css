@@ -1,7 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-#root{
-    height: 100vh;
+@font-face {
+  src: url("./fonts/me_quran.ttf");
+  font-family: QuranFont;
 }
+@font-face {
+  font-family: "quranFont";
+  src: url("./fonts/UthmanicHafs_V20.ttf");
+}
+@font-face {
+  font-family: "numberFont";
+  src: url("./fonts/Al\ Qalam\ Quran\ Majeed.ttf");
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+#root {
+  height: 100vh;
+}
+* {
+  font-family: "Cairo", sans-serif;
+}
+
+.font-QuranFont {
+  font-family: quranFont;
+}
+
+.font-NumberFont {
+    font-family: numberFont;
+  }
+  

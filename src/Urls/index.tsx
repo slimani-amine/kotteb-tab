@@ -1,13 +1,15 @@
-const { REACT_APP_ACCESS_KEY } = process.env
+const { BASE_URL, REACT_APP_ACCESS_KEY } = process.env
 
-const query = 'nebula'
-const orientation = 'landscape'
+const query = 'islamique'
+// const orientation = 'landscape'
 const pageNo = Math.floor(Math.random() * 200) + 1
 
-const UNSPLASH_API = `https://api.unsplash.com/search/photos?client_id=${REACT_APP_ACCESS_KEY}&&orientation=${orientation}&&query=${query}&&page=${pageNo}`
+const RANDOM_BG_URL = `http://localhost:5099/api/v1/tab/background/random`
 
-const QUOTES_URL = 'https://api.quotable.io/random'
+const QURAN = `http://localhost:5099/api/v1/quran/recitations?reciter=66dada5e69f96db230265707&riwayat=66be128148d3e348549305f0`
+
+const QUOTES_URL = 'https://zenquotes.io/api/random'
 
 const WEATHER_API = `https://api.openweathermap.org/data/2.5/weather`
 
-export { UNSPLASH_API, QUOTES_URL, WEATHER_API }
+export { RANDOM_BG_URL, QURAN, QUOTES_URL, WEATHER_API }

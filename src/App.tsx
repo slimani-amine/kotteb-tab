@@ -1,176 +1,133 @@
-import { useAxios, useLocalStorage } from './Hooks'
-
-import { SetStateAction, useEffect, useState,useRef } from 'react'
-
-import { UNSPLASH_API } from './Urls/index'
-
-import { v4 as uuid } from 'uuid'
-
-import { TeenyiconsMenuSolid } from './Icons'
-
-import {
-	Loader,
-	DateTime,
-	Weather,
-	Quotes,
-	Todos,
-	Focus,
-} from './Components'
-
-interface urlType{
-	full: string;
-	raw: string;
-	regular: string;
-	small: string;
-	small_s3: string;
-	thumb: string;	
-}
-
-interface fetchedImageType extends urlType{
-	id: string;
-}
-
-
-interface ResultType{
-	urls: urlType;
-}
-
-interface ResponseType {
-	results: ResultType[];
-}
+import { useAxios } from "./Hooks";
+import { useEffect, useState, useRef } from "react";
+import { RANDOM_BG_URL } from "./Urls/index";
+import { Loader, DateTime, Quran, PrayerTimesTab, Settings, HijriDate } from "./Components";
+import { ToastContainer } from "react-toastify";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { ResponseType } from "./types";
+import { useTranslation } from 'react-i18next';
+const fallbackImages = [
+  "/tab-backgrounds/bg1.png",
+  "/tab-backgrounds/bg2.jpg",
+  "/tab-backgrounds/bg3.jpeg",
+  "/tab-backgrounds/bg4.avif",
+  "/tab-backgrounds/bg5.avif",
+  "/tab-backgrounds/bg6.avif",
+  "/tab-backgrounds/bg7.avif",
+  "/tab-backgrounds/bg8.avif",
+  "/tab-backgrounds/bg9.avif",
+  "/tab-backgrounds/bg10.avif",
+  "/tab-backgrounds/bg11.avif",
+  "/tab-backgrounds/bg12.avif",
+  "/tab-backgrounds/bg13.jpg",
+];
 
 export default function App() {
-	const [selectImage, setSelectImage] = useLocalStorage(
-		'selectedImage',
-		''
-	)
+  const [bgImage, setBgImage] = useState("");
+  const [bgAlt, setBgAlt] = useState("");
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const bgRef = useRef<HTMLDivElement | null>(null);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [volume, setVolume] = useState(0.5);
+  const [language, setLanguage] = useState('en');
+  const { i18n } = useTranslation();
 
-	const [username, setUserName] = useLocalStorage('username','')
+  useEffect(() => {
+    // Set initial language when app loads
+    i18n.changeLanguage(language);
+  }, [language]);
 
-	const selectedImage  = selectImage as unknown as fetchedImageType
+  const [res, loading, error] = useAxios({
+    method: "get",
+    url: RANDOM_BG_URL,
+  });
 
-	const setSelectedImage = setSelectImage as unknown as React.Dispatch<SetStateAction<fetchedImageType>>
+  const response = res as ResponseType | undefined;
 
-	const [nebulaImages, setNebulaImages] = useState<fetchedImageType[]>([])
+  useEffect(() => {
+    const fetchedImage = response?.data;
 
-	const [displayHeader, setDisplayHeader] = useState(true)
+    if (fetchedImage?.url && !bgImage) {
+      setBgImage(fetchedImage.url);
+      setBgAlt(fetchedImage.name);
+    } else if (!fetchedImage?.url && !bgImage) {
+      // Select a random fallback image if no fetched image is available
+      const randomIndex = Math.floor(Math.random() * fallbackImages.length);
+      setBgImage(fallbackImages[randomIndex]);
+      setBgAlt("Fallback Image");
+    }
+  }, [response, bgImage]);
 
-	const [res, loading, error] = useAxios({
-		method: 'get',
-		url: UNSPLASH_API,
-	})
+  useEffect(() => {
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        setImageLoaded(true);
+      }
+    };
 
-	const response = res as ResponseType
+    const observer = new IntersectionObserver(handleIntersection, {
+      rootMargin: "0px 0px 200px 0px",
+    });
 
-	useEffect(() => {
-		const fetchedImages = response?.results?.map(img => ({
-			...img.urls,
-			id: uuid(),
-		}))
+    if (bgRef.current) {
+      observer.observe(bgRef.current);
+    }
 
+    return () => {
+      if (bgRef.current) {
+        observer.unobserve(bgRef.current);
+      }
+    };
+  }, []);
 
-		if (!selectedImage) {
-			setSelectedImage(fetchedImages?.[0])
-		}
+  return (
+    <div className="flex items-center justify-center font-mono h-full w-screen relative ">
+      <div
+        ref={bgRef}
+        className="absolute top-0 left-0 w-full h-full bg-black/30"
+        style={{
+          zIndex: -1,
+          overflow: "hidden",
+        }}
+      >
+        <LazyLoadImage
+          src={imageLoaded ? bgImage : "https://via.placeholder.com/150"}
+          alt={bgAlt}
+          className="w-full h-full object-cover blur-[2px]"
+          onLoad={() => setImageLoaded(true)}
+          loading="lazy"
+        />
+      </div>
 
-		setNebulaImages(fetchedImages)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [response])
-
-	const clickImgHandler = (img: fetchedImageType) => {
-		if (img.id === selectedImage.id) {
-			return null
-		}
-
-		setSelectedImage(img)
-
-		const remaningImages = nebulaImages.filter(
-			images => images.id !== img.id
-		)
-
-		setNebulaImages([img, ...remaningImages])
-	}
-
-	const inputRef= useRef<HTMLInputElement>(null)
-
-	useEffect(() => {
-		inputRef?.current?.focus()
-	},[])
-
-	return (
-		<div className='grid bg-black font-mono'>
-			{!username && (
-				<div className='fixed w-[100vw] h-[100vh] backdrop-blur z-50 flex justify-center items-center flex-col'>
-					<div>
-						<h3 className='text-white font-thin text-2xl'>Hi welcome, please enter your name ?</h3>
-						<input name='username' type="text" className='w-full p-1 mt-2 bg-transparent border-none text-white'ref={inputRef} onKeyDown={(e) => e.code === "Enter" && ((e.target)as HTMLInputElement).value !== '' && setUserName(((e.target)as HTMLInputElement).value)}/>
-					</div>
-				</div>
-			)}
-			{!error && loading && <Loader />}
-
-			<header
-				className={`${
-					Boolean(!displayHeader)
-						? 'hidden'
-						: 'grid grid-cols-10 gap-1 h-13vh order-1 mt-2'
-				} `}>
-				{nebulaImages?.map((img, idx) => (
-					<button key={idx} onClick={() => clickImgHandler(img)}>
-						<img
-							src={img.thumb}
-							alt='header-imgs'
-							loading='eager'
-							className='aspect-square h-full w-full z-10 hover:scale-100'
-						/>
-					</button>
-				))}
-			</header>
-
-			<main className='order-3'>
-				<div className='grid children:row-span-full children:col-span-full'>
-					<img
-						src={selectedImage?.regular}
-						alt='bg-img'
-						loading='eager'
-						className={`${
-							Boolean(displayHeader) ? 'h-85vh' : 'h-100vh'
-						} w-full `}
-					/>
-
-					<section className='flex'>
-						<div className='self-end m-3 w-1/2'>
-							<h2 className='text-xl text-white ml-4'>Hello, {username}! Have a nice day.</h2>
-							<Weather />
-							<DateTime />
-						</div>
-
-						<div className='flex flex-col items-end w-1/2 h-full justify-between'>
-							<div className='h-3/4 w-full flex flex-col items-end'>
-								<TeenyiconsMenuSolid
-									width='1.5rem'
-									height='1.5rem'
-									className='mt-5 mr-5  cursor-pointer'
-									onClick={() => setDisplayHeader(prev => !prev)}
-								/>
-
-								<Todos />
-							</div>
-
-							<div className='text-white text-xl mt-auto mr-2 self-end  grid h-1/4'>
-								<Focus />
-
-								<Quotes />
-							</div>
-						</div>
-					</section>
-				</div>
-			</main>
-
-			<footer
-				className={`${
-					Boolean(displayHeader) ? 'order-2 h-1vh bg-black' : 'hidden'
-				}`}></footer>
-		</div>
-	)
+      {loading && <Loader />}
+      <div className="flex flex-col z-10">
+        <ToastContainer
+          position="top-center"
+          newestOnTop={true}
+          closeOnClick
+          pauseOnFocusLoss
+        />
+        <div className=" z-10 ">
+          <HijriDate />
+          <DateTime />
+          <Quran />
+          <PrayerTimesTab 
+            volume={volume} 
+            isSoundEnabled={isSoundEnabled} 
+            onVolumeChange={(vol) => setVolume(vol)}
+            language={language}
+          />
+          <Settings
+            isSoundEnabled={isSoundEnabled}
+            onSoundToggle={() => setIsSoundEnabled(prev => !prev)}
+            onVolumeChange={setVolume}
+            volume={volume}
+            language={language}
+            setLanguage={setLanguage}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }

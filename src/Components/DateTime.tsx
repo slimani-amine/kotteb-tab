@@ -1,14 +1,12 @@
-import React from 'react'
-import { useDateTime } from '../Hooks'
+import React from "react";
+import { useDateTime } from "../Hooks";
 
 export const DateTime: React.FC = () => {
-	const [dateNow, timeNow] = useDateTime()
+  const [dateNow, timeNow] = useDateTime();
 
-	return (
-		<div className='text-white'>
-			<p className='text-xl ml-2'>
-				{dateNow}, {timeNow}
-			</p>
-		</div>
-	)
-}
+  return (
+    <div className="text-white text-center">
+      <p className="text-[6rem] ">{timeNow}</p>
+    </div>
+  );
+};

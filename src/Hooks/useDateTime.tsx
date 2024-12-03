@@ -1,37 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
-/**
- * hook uses Date object
- *
- * @returns date(long format) and time(12hrs Format including seconds)
- *
- */
+export const useDateTime = (): [string, string] => {
+  const [dateNow, setDateNow] = useState('');
+  const [timeNow, setTimeNow] = useState('');
 
-export function useDateTime() {
-	const event: Date = new Date()
+  useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date();
+      const date = now.toLocaleDateString(); // Format date as per locale
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }); // Format time as HH:mm
+      setDateNow(date);
+      setTimeNow(time);
+    };
 
-	const today = event
-		.toLocaleDateString('en-us', {
-			weekday: 'long',
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-		})
-		.split(',')
-		.join('')
+    updateDateTime();
+    const interval = setInterval(updateDateTime, 1000); // Update every second
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []);
 
-	const timeNow = event.toLocaleTimeString('en-us')
-
-	const newDate = [today, timeNow]
-
-	const [date, setDate] = useState <string[]>(newDate)
-
-	useEffect(() => {
-		const timer = setInterval(() => setDate(newDate), 1000)
-		return () => clearInterval(timer)
-	})
-
-	const [day, time] = date
-
-	return [day, time]
-}
+  return [dateNow, timeNow];
+};

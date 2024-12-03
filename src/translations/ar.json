@@ -1,0 +1,19 @@
+{
+  "appName": "ملحق كروم نكست تاب",
+  "hijriDate": "التاريخ الهجري",
+  "adhanSound": "صوت الأذان",
+  "volume": "الصوت",
+  "soundOn": "الصوت مفعل",
+  "soundOff": "الصوت معطل",
+  "testAdhan": "اختبار الأذان",
+  "language": "اللغة",
+  "prayerTimes": "أوقات الصلاة",
+  "loadingPrayerTimes": "جارٍ تحميل أوقات الصلاة...",
+  "remainingTime": "متبقي",
+  "fajr": "الفجر",
+  "sunrise": "شروق الشمس",
+  "dhuhr": "الظهر",
+  "asr": "العصر",
+  "maghrib": "المغرب",
+  "isha": "العشاء"
+}

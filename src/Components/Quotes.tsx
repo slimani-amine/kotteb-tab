@@ -3,8 +3,8 @@ import { useAxios } from '../Hooks'
 import { QUOTES_URL } from '../Urls/index'
 
 interface QuoteType{
-	content: string;
-	author: string;
+	q: string;
+	a: string;
 }
 
 export const Quotes = () => {
@@ -20,7 +20,7 @@ export const Quotes = () => {
 		<Fragment>
 			{Boolean(!error && !loading) && (
 				<p>
-					{myquote?.content} --{myquote?.author}
+					{myquote?.q} --{myquote?.a}
 				</p>
 			)}
 		</Fragment>

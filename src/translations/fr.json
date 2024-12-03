@@ -1,0 +1,19 @@
+{
+  "appName": "Extension Chrome NextTab",
+  "hijriDate": "Date Hijri",
+  "adhanSound": "Son Adhan",
+  "volume": "Volume",
+  "soundOn": "Son Activé",
+  "soundOff": "Son Désactivé",
+  "testAdhan": "Tester Adhan",
+  "language": "Langue",
+  "prayerTimes": "Heures de Prière",
+  "loadingPrayerTimes": "Chargement des heures de prière...",
+  "remainingTime": "Reste",
+  "fajr": "Fajr",
+  "sunrise": "Lever du Soleil",
+  "dhuhr": "Dhuhr",
+  "asr": "Asr",
+  "maghrib": "Maghrib",
+  "isha": "Isha"
+}
