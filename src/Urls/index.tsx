@@ -4,9 +4,9 @@ const query = 'islamique'
 // const orientation = 'landscape'
 const pageNo = Math.floor(Math.random() * 200) + 1
 
-const RANDOM_BG_URL = `http://localhost:5099/api/v1/tab/background/random`
+const RANDOM_BG_URL = `https://quranapi.lissene.dev/api/v1/tab/background/random`
 
-const QURAN = `http://localhost:5099/api/v1/quran/recitations?reciter=66dada5e69f96db230265707&riwayat=66be128148d3e348549305f0`
+const QURAN = `https://quranapi.lissene.dev/api/v1/quran/recitations?reciter=66dada5e69f96db230265707&riwayat=66be128148d3e348549305f0`
 
 const QUOTES_URL = 'https://zenquotes.io/api/random'
 

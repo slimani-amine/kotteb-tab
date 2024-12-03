@@ -11,6 +11,7 @@ interface PrayerTimesTabProps {
   isSoundEnabled: boolean;
   language?: string;
   onVolumeChange?: (volume: number) => void;
+  onSoundToggle: () => void;
 }
 
 // Function to calculate the remaining time until the next prayer
@@ -47,6 +48,7 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
   isSoundEnabled,
   language = 'en',
   onVolumeChange,
+  onSoundToggle,
 }) => {
   const { t } = useTranslation();
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
@@ -62,8 +64,11 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
   const adhanAudio = new Audio("/adhan.mp3");
 
   useEffect(() => {
-    adhanAudio.volume = volume;
-  }, [volume]);
+    if (onVolumeChange) {
+      adhanAudio.volume = volume;
+    }
+  }, [volume, onVolumeChange]);
+
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -295,6 +300,7 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
       </div>
       <button
         className="absolute bottom-0 right-0 bg-black bg-opacity-60 text-white p-4 rounded-full"
+        onClick={onSoundToggle}
       >
         {isSoundEnabled ? (
           <IoVolumeHighOutline className="h-8 w-8" />

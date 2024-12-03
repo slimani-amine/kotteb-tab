@@ -17,6 +17,7 @@ import { useAxios } from "../Hooks";
 import { QURAN } from "../Urls";
 import { ResponseType } from "../types";
 import { QuranData, QuranSurah, QuranVerse, Recitation } from "../types/quran";
+import { IndexedDBService } from '../services/indexedDB';
 
 // Playback Speeds
 const PLAYBACK_SPEEDS = [
@@ -59,7 +60,7 @@ export const Quran: React.FC = () => {
   );
   const [currentSurah, setCurrentSurah] = useState<QuranSurah | null>(null);
   const [currentVerse, setCurrentVerse] = useState<QuranVerse | null>(null);
-  console.log("🚀 ~ currentVerse:", currentVerse);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [res, loading, error] = useAxios({
     method: "get",
@@ -68,31 +69,150 @@ export const Quran: React.FC = () => {
 
   const response = res as ResponseType | undefined;
 
+  // Load initial verse from IndexedDB
   useEffect(() => {
-    if (response?.data) {
-      const quranData = response.data as QuranData;
-      setQurans(quranData);
-
-      // Set initial recitation
-      if (quranData.recitations.length > 0) {
-        const initialRecitation = quranData.recitations[0];
-        setCurrentRecitation(initialRecitation);
-
-        // Set initial surah (Al-Fatiha)
-        const initialSurah = initialRecitation.surah.find(
-          (s) => s.surahId === 1
-        );
-        if (initialSurah) {
-          setCurrentSurah(initialSurah);
-
-          // Set initial verse
-          if (initialSurah.verses.length > 0) {
-            setCurrentVerse(initialSurah.verses[0]);
+    const loadInitialState = async () => {
+      try {
+        // Get cached Quran data
+        const cachedQuranData = await IndexedDBService.getQuranData();
+        if (cachedQuranData) {
+          setQurans(cachedQuranData);
+          const initialRecitation = cachedQuranData.recitations[0];
+          setCurrentRecitation(initialRecitation);
+          
+          // Get last verse position
+          const savedVersePosition = await IndexedDBService.getSetting('versePosition') || { surahId: 1, verseId: 1 };
+          
+          // Calculate next verse position
+          let nextSurahId = savedVersePosition.surahId;
+          let nextVerseId = savedVersePosition.verseId;
+          
+          const currentSurah = initialRecitation.surah.find(s => s.surahId === savedVersePosition.surahId);
+          if (currentSurah) {
+            if (nextVerseId < currentSurah.verses.length) {
+              nextVerseId++;
+            } else {
+              // Move to next surah
+              const nextSurahIndex = initialRecitation.surah.findIndex(s => s.surahId === savedVersePosition.surahId) + 1;
+              if (nextSurahIndex < initialRecitation.surah.length) {
+                nextSurahId = initialRecitation.surah[nextSurahIndex].surahId;
+                nextVerseId = 1;
+              } else {
+                // If we're at the end, start from beginning
+                nextSurahId = 1;
+                nextVerseId = 1;
+              }
+            }
           }
+
+          // Save next verse position
+          await IndexedDBService.saveSetting('versePosition', {
+            surahId: nextSurahId,
+            verseId: nextVerseId
+          });
+
+          // Set the states
+          const nextSurah = initialRecitation.surah.find(s => s.surahId === nextSurahId);
+          if (nextSurah) {
+            setCurrentSurah(nextSurah);
+            const verse = nextSurah.verses.find(v => v.verseId === nextVerseId);
+            if (verse) {
+              setCurrentVerse(verse);
+            }
+          }
+          setIsLoading(false);
+          return;
+        }
+      } catch (error) {
+        console.error('Error loading from IndexedDB:', error);
+      }
+    };
+    loadInitialState();
+  }, []);
+
+  // Handle API response and cache data
+  useEffect(() => {
+    const handleResponse = async () => {
+      if (response?.data) {
+        const quranData = response.data as QuranData;
+        
+        try {
+          // Cache Quran data
+          await IndexedDBService.saveQuranData(quranData);
+          setQurans(quranData);
+
+          // Set initial recitation
+          if (quranData.recitations.length > 0) {
+            const initialRecitation = quranData.recitations[0];
+            setCurrentRecitation(initialRecitation);
+
+            // Get saved position or start from first verse
+            const savedVersePosition = await IndexedDBService.getSetting('versePosition');
+            const position = savedVersePosition || { surahId: 1, verseId: 1 };
+
+            if (!savedVersePosition) {
+              await IndexedDBService.saveSetting('versePosition', position);
+            }
+            
+            const initialSurah = initialRecitation.surah.find(s => s.surahId === position.surahId);
+            if (initialSurah) {
+              setCurrentSurah(initialSurah);
+              const verse = initialSurah.verses.find(v => v.verseId === position.verseId);
+              if (verse) {
+                setCurrentVerse(verse);
+              }
+            }
+          }
+        } catch (error) {
+          console.error('Error caching Quran data:', error);
+        }
+        setIsLoading(false);
+      }
+    };
+    handleResponse();
+  }, [response]);
+
+  const goToNextVerse = async () => {
+    if (!currentSurah || !currentVerse || !currentRecitation) return;
+    
+    const currentVerseIndex = currentSurah.verses.findIndex(v => v.verseId === currentVerse.verseId);
+    
+    if (currentVerseIndex < currentSurah.verses.length - 1) {
+      // Next verse in current surah
+      setCurrentVerse(currentSurah.verses[currentVerseIndex + 1]);
+    } else {
+      // Move to next surah
+      const currentSurahIndex = currentRecitation.surah.findIndex(s => s.surahId === currentSurah.surahId);
+      if (currentSurahIndex < currentRecitation.surah.length - 1) {
+        const nextSurah = currentRecitation.surah[currentSurahIndex + 1];
+        setCurrentSurah(nextSurah);
+        if (nextSurah.verses.length > 0) {
+          setCurrentVerse(nextSurah.verses[0]);
         }
       }
     }
-  }, [response]);
+  };
+
+  const goToPreviousVerse = () => {
+    if (!currentSurah || !currentVerse || !currentRecitation) return;
+    
+    const currentVerseIndex = currentSurah.verses.findIndex(v => v.verseId === currentVerse.verseId);
+    
+    if (currentVerseIndex > 0) {
+      // Previous verse in current surah
+      setCurrentVerse(currentSurah.verses[currentVerseIndex - 1]);
+    } else {
+      // Move to previous surah
+      const currentSurahIndex = currentRecitation.surah.findIndex(s => s.surahId === currentSurah.surahId);
+      if (currentSurahIndex > 0) {
+        const prevSurah = currentRecitation.surah[currentSurahIndex - 1];
+        setCurrentSurah(prevSurah);
+        if (prevSurah.verses.length > 0) {
+          setCurrentVerse(prevSurah.verses[prevSurah.verses.length - 1]);
+        }
+      }
+    }
+  };
 
   // Audio Speed Control
   useEffect(() => {
@@ -123,51 +243,11 @@ export const Quran: React.FC = () => {
 
   // Navigation Handlers
   const handleNextVerse = () => {
-    if (!currentSurah || !currentVerse) return;
-
-    const currentIndex = currentSurah.verses.findIndex(
-      (v) => v._id === currentVerse._id
-    );
-    if (currentIndex < currentSurah.verses.length - 1) {
-      // Next verse in current surah
-      setCurrentVerse(currentSurah.verses[currentIndex + 1]);
-    } else if (currentRecitation) {
-      // Move to next surah
-      const currentSurahIndex = currentRecitation.surah.findIndex(
-        (s) => s._id === currentSurah._id
-      );
-      if (currentSurahIndex < currentRecitation.surah.length - 1) {
-        const nextSurah = currentRecitation.surah[currentSurahIndex + 1];
-        setCurrentSurah(nextSurah);
-        if (nextSurah.verses.length > 0) {
-          setCurrentVerse(nextSurah.verses[0]);
-        }
-      }
-    }
+    goToNextVerse();
   };
 
   const handlePreviousVerse = () => {
-    if (!currentSurah || !currentVerse) return;
-
-    const currentIndex = currentSurah.verses.findIndex(
-      (v) => v._id === currentVerse._id
-    );
-    if (currentIndex > 0) {
-      // Previous verse in current surah
-      setCurrentVerse(currentSurah.verses[currentIndex - 1]);
-    } else if (currentRecitation) {
-      // Move to previous surah
-      const currentSurahIndex = currentRecitation.surah.findIndex(
-        (s) => s._id === currentSurah._id
-      );
-      if (currentSurahIndex > 0) {
-        const prevSurah = currentRecitation.surah[currentSurahIndex - 1];
-        setCurrentSurah(prevSurah);
-        if (prevSurah.verses.length > 0) {
-          setCurrentVerse(prevSurah.verses[prevSurah.verses.length - 1]);
-        }
-      }
-    }
+    goToPreviousVerse();
   };
 
   const handleToggleFavorite = () => {
@@ -203,6 +283,7 @@ export const Quran: React.FC = () => {
     navigator.clipboard.writeText(text);
     toast.success("Verse copied to clipboard!");
   };
+
   // Render Methods
   const renderSettingsModal = () => (
     <AnimatePresence>
@@ -349,10 +430,10 @@ export const Quran: React.FC = () => {
       {renderSettingsModal()}
       {renderTranslationModal()}
       {renderTafseerModal()}
-      {loading ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : error ? (
-        <ErrorMessage />
+       <ErrorMessage />
       ) : (
         <div className="bg-black bg-opacity-60 rounded-lg p-6 w-[1000px] text-white">
           <div className="text-center flex flex-col gap-12">
@@ -367,7 +448,7 @@ export const Quran: React.FC = () => {
               <div className="flex items-center justify-center gap-4">
                 <MdContentCopy
                   onClick={handleCopyToClipboard}
-                  className="w-[2rem] h-[2rem] cursor-pointer text-gray-300 hover:bg-gray-700 hover:rounded-md p-1 mr-1"
+                  className="w-[2rem] h-[2rem] cursor-pointer text-gray-300 hover:bg-gray-700 hover:rounded-md p-1 mr-2"
                 />
                 <p className="text-white text-[3rem] font-QuranFont">
                   {currentVerse?.text}

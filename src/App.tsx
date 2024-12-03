@@ -28,6 +28,7 @@ export default function App() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const bgRef = useRef<HTMLDivElement | null>(null);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  // Initialize volume as 0.5 (50%)
   const [volume, setVolume] = useState(0.5);
   const [language, setLanguage] = useState('en');
   const { i18n } = useTranslation();
@@ -115,6 +116,7 @@ export default function App() {
           <PrayerTimesTab 
             volume={volume} 
             isSoundEnabled={isSoundEnabled} 
+            onSoundToggle={() => setIsSoundEnabled(prev => !prev)}
             onVolumeChange={(vol) => setVolume(vol)}
             language={language}
           />

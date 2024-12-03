@@ -49,8 +49,9 @@ export const Settings: React.FC<SettingsProps> = ({
   }, []);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseFloat(e.target.value);
-    onVolumeChange(newVolume);
+    const rawVolume = parseFloat(e.target.value);
+    const normalizedVolume = rawVolume / 100;
+    onVolumeChange(normalizedVolume);
   };
 
   const testAdhan = () => {
@@ -96,52 +97,33 @@ export const Settings: React.FC<SettingsProps> = ({
 
               {/* Sound Controls */}
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">{tSafe("adhanSound")}</span>
-                  <button
-                    onClick={onSoundToggle}
-                    className={`px-4 py-2 rounded ${
-                      isSoundEnabled
-                        ? "bg-green-500 text-white"
-                        : "bg-red-500 text-white"
-                    }`}
-                  >
-                    {isSoundEnabled ? tSafe("soundOn") : tSafe("soundOff")}
+                <div className="flex justify-between items-center">
+                  <span>{tSafe('adhanSound')}</span>
+                  <button onClick={onSoundToggle}>
+                    {isSoundEnabled ? (
+                      <IoVolumeHighOutline className="h-6 w-6" />
+                    ) : (
+                      <IoVolumeMuteOutline className="h-6 w-6" />
+                    )}
                   </button>
                 </div>
-
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={volume * 100}
+                    onChange={handleVolumeChange}
+                    className="w-full"
+                  />
+                  <span>{Math.round(volume * 100)}%</span>
+                </div>
                 <button
                   onClick={testAdhan}
-                  disabled={!isSoundEnabled}
-                  className={`px-4 py-2 rounded ${
-                    isSoundEnabled
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  }`}
+                  className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
                 >
-                  {tSafe("testAdhan")}
+                  {tSafe('testAdhan')}
                 </button>
-
-                {/* Volume Slider */}
-                {isSoundEnabled && (
-                  <div className="space-y-1">
-                    <label htmlFor="volume" className="block mb-2">
-                      {tSafe("volume")}
-                    </label>
-                    <input
-                      type="range"
-                      id="volume"
-                      min="0"
-                      max="100"
-                      value={volume * 100}
-                      onChange={handleVolumeChange}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                    />
-                    <span className="text-sm text-gray-600">
-                      {volume * 100}%
-                    </span>
-                  </div>
-                )}
               </div>
             </div>
           </motion.div>
