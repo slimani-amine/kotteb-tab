@@ -239,7 +239,7 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
       transition={{ duration: 0.5 }}
       className="relative flex justify-center p-6 m-0"
     >
-      <div className="bg-black bg-opacity-60 text-gray-900 rounded-lg p-6 w-[1100px] shadow-lg flex justify-between items-center text-center relative">
+      <div className="bg-black bg-opacity-60 text-gray-900 rounded-lg p-6 w-[1200px] shadow-lg flex justify-between items-center text-center relative">
         <a href="https://kotteb.com/" target="_blank">
           <Logo className="cursor-pointer" />
         </a>

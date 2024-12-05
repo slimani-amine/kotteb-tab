@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@radix-ui/react-switch": "^1.1.1",
     "@types/negotiator": "^0.6.3",
     "@types/react-i18next": "^8.1.0",
     "@types/react-lazy-load-image-component": "^1.6.4",

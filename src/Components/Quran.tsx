@@ -245,7 +245,7 @@ export const Quran: React.FC = () => {
       {isLoading ? (
         <LoadingSpinner />
       )  : (
-        <div className="bg-black bg-opacity-60 rounded-lg p-6 w-[1100px] text-white">
+        <div className="bg-black bg-opacity-60 rounded-lg p-6 w-[1200px] text-white">
           <QuranDisplay
             basmalah={basmalah}
             surahId={currentSurah?.surahId}

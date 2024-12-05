@@ -27,7 +27,52 @@
     "reciter": "Reciter",
     "translation": "Translation",
     "mode": "Recitation Mode",
-    "tafseer": "Tafseer"
+    "tafseer": "Tafseer",
+    "title": "Settings",
+    "tabs": {
+      "general": "General",
+      "verse": "Verses",
+      "prayer": "Prayer",
+      "background": "Background"
+    },
+    "general": {
+      "visibility": "Component Visibility",
+      "showDateTime": "Show Date & Time",
+      "showHijriDate": "Show Hijri Date",
+      "showPrayerTimes": "Show Prayer Times",
+      "showQuran": "Show Quran"
+    },
+    "verse": {
+      "recitation": "Recitation Settings",
+      "selectReciter": "Select Reciter",
+      "recitationMode": "Recitation Mode",
+      "verseMode": "Verse by Verse",
+      "continuousMode": "Continuous",
+      "showTranslation": "Show Translation",
+      "showTafseer": "Show Tafseer",
+      "translationLanguage": "Translation Language"
+    },
+    "prayer": {
+      "location": "Location Settings",
+      "country": "Country",
+      "city": "City",
+      "calculationMethod": "Calculation Method",
+      "timeAdjustments": "Prayer Time Adjustments",
+      "fajr": "Fajr",
+      "dhuhr": "Dhuhr",
+      "asr": "Asr",
+      "maghrib": "Maghrib",
+      "isha": "Isha",
+      "minutes": "minutes"
+    },
+    "background": {
+      "show": "Show Background",
+      "blur": "Background Blur",
+      "source": "Background Source",
+      "useApi": "Use API Images",
+      "useCustom": "Use Custom Image",
+      "customImage": "Upload Custom Image"
+    }
   },
   "actions": {
     "copy": "Copy",

@@ -7,6 +7,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { tSafe } from "../translations/i18nHelper";
+import { SettingsModal } from "./Settings/SettingsModal";
 
 interface SettingsProps {
   isSoundEnabled: boolean;
@@ -43,7 +44,10 @@ export const Settings: React.FC<SettingsProps> = ({
   // Effect to handle clicks outside the modal
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         closeModal();
       }
     };
@@ -83,65 +87,7 @@ export const Settings: React.FC<SettingsProps> = ({
       </button>
 
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            ref={modalRef}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="absolute bottom-16 right-0 bg-black bg-opacity-80 rounded-lg p-4 w-64 text-white"
-          >
-            <div className="space-y-4">
-              {/* Language Switcher */}
-              <div className="flex justify-between items-center w-full gap-2">
-                {["en", "fr", "ar"].map((lang) => (
-                  <button
-                    key={lang}
-                    onClick={() => changeLanguage(lang)}
-                    className={`px-4 py-2 rounded w-1/3 ${
-                      language === lang
-                        ? "bg-[#FECA30] hover:opacity-80 text-white"
-                        : "bg-gray-200 text-gray-700 "
-                    }`}
-                  >
-                    {lang.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-
-              {/* Sound Controls */}
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span>{tSafe("adhanSound")}</span>
-                  <button onClick={onSoundToggle}>
-                    {isSoundEnabled ? (
-                      <IoVolumeHighOutline className="h-6 w-6" />
-                    ) : (
-                      <IoVolumeMuteOutline className="h-6 w-6" />
-                    )}
-                  </button>
-                </div>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={volume * 100}
-                    onChange={handleVolumeChange}
-                    className="w-full "
-                  />
-                  <span>{Math.round(volume * 100)}%</span>
-                </div>
-                <button
-                  onClick={testAdhan}
-                  className="w-full bg-[#FECA30] text-white py-2 rounded hover:opacity-80 transition-colors"
-                >
-                  {tSafe("testAdhan")}
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
+        {isOpen && <SettingsModal isOpen={isOpen} onClose={closeModal} />}
       </AnimatePresence>
     </div>
   );
