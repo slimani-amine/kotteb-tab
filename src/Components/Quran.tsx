@@ -13,9 +13,9 @@ import { QuranAudioPlayer } from "./Quran/QuranAudioPlayer";
 
 
 export const Quran: React.FC = () => {
-  const [currentReciter, setCurrentReciter] = useState(1);
+  // const [currentReciter, setCurrentReciter] = useState(1);
   const [currentTranslation, setCurrentTranslation] = useState("en");
-  const [recitationMode, setRecitationMode] = useState(1);
+  // const [recitationMode, setRecitationMode] = useState(1);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -40,7 +40,7 @@ export const Quran: React.FC = () => {
   const [currentVerse, setCurrentVerse] = useState<QuranVerse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [res, loading, error] = useAxios({
+  const [res, error] = useAxios({
     method: "get",
     url: QURAN,
   });
@@ -244,10 +244,8 @@ export const Quran: React.FC = () => {
 
       {isLoading ? (
         <LoadingSpinner />
-      ) : error ? (
-        <ErrorMessage />
-      ) : (
-        <div className="bg-black bg-opacity-60 rounded-lg p-6 w-[1000px] text-white">
+      )  : (
+        <div className="bg-black bg-opacity-60 rounded-lg p-6 w-[1100px] text-white">
           <QuranDisplay
             basmalah={basmalah}
             surahId={currentSurah?.surahId}

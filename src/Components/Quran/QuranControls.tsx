@@ -6,7 +6,6 @@ import {
   MdSkipPrevious,
   MdFavorite,
   MdFavoriteBorder,
-  MdSettings,
   MdTranslate,
   MdInfoOutline,
   MdContentCopy,
@@ -56,30 +55,30 @@ export const QuranControls: React.FC<QuranControlsProps> = ({
       )}
       <MdSkipPrevious
         onClick={onPrevious}
-        className="w-8 h-8 cursor-pointer hover:text-yellow-500"
+        className="w-8 h-8 cursor-pointer hover:text-[#FECA30]"
       />
       {isPlaying ? (
         <MdPause
           onClick={onPlayPause}
-          className="w-10 h-10 cursor-pointer text-yellow-500"
+          className="w-10 h-10 cursor-pointer text-[#FECA30]"
         />
       ) : (
         <MdPlayArrow
           onClick={onPlayPause}
-          className="w-10 h-10 cursor-pointer text-yellow-500"
+          className="w-10 h-10 cursor-pointer text-[#FECA30]"
         />
       )}
       <MdSkipNext
         onClick={onNext}
-        className="w-8 h-8 cursor-pointer hover:text-yellow-500"
+        className="w-8 h-8 cursor-pointer hover:text-[#FECA30]"
       />
       <MdTranslate
         onClick={onOpenTranslation}
-        className="w-8 h-8 cursor-pointer hover:text-yellow-500"
+        className="w-8 h-8 cursor-pointer hover:text-[#FECA30]"
       />
       <MdInfoOutline
         onClick={onOpenTafseer}
-        className="w-8 h-8 cursor-pointer hover:text-yellow-500"
+        className="w-8 h-8 cursor-pointer hover:text-[#FECA30]"
       />
     </div>
   );

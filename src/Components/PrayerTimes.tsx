@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from "react";
 import { Coordinates, CalculationMethod, PrayerTimes, Prayer } from "adhan";
 import { motion } from "framer-motion";
-import Logo from "./Logo";
+import { Logo } from "./Logo";
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from "react-icons/io5";
-import { tSafe } from '../translations/i18nHelper';
+import { tSafe } from "../translations/i18nHelper";
 
 interface PrayerTimesTabProps {
   volume: number;
@@ -46,11 +45,10 @@ const calculateTimeLeft = (prayerTime: Date) => {
 export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
   volume,
   isSoundEnabled,
-  language = 'en',
+  language = "en",
   onVolumeChange,
   onSoundToggle,
 }) => {
-  const { t } = useTranslation();
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
   const [prayerTimes, setPrayerTimes] = useState<any>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -67,8 +65,7 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
     if (onVolumeChange) {
       adhanAudio.volume = volume;
     }
-  }, [volume, onVolumeChange]);
-
+  }, [volume, onVolumeChange, adhanAudio]);
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -171,7 +168,7 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
         transition={{ duration: 0.5 }}
         className="flex justify-center items-center h-screen"
       >
-        {tSafe('loadingPrayerTimes')}
+        {tSafe("loadingPrayerTimes")}
       </motion.div>
     );
   }
@@ -242,8 +239,10 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
       transition={{ duration: 0.5 }}
       className="relative flex justify-center p-6 m-0"
     >
-      <div className="bg-black bg-opacity-60 text-gray-900 rounded-lg p-6 w-[1000px] shadow-lg flex justify-between items-center text-center relative">
-        <Logo />
+      <div className="bg-black bg-opacity-60 text-gray-900 rounded-lg p-6 w-[1100px] shadow-lg flex justify-between items-center text-center relative">
+        <a href="https://kotteb.com/" target="_blank">
+          <Logo className="cursor-pointer" />
+        </a>
         {prayerTimesData.map((prayer) => {
           const isNextPrayer =
             nextPrayer === Prayer[prayer.name as keyof typeof Prayer];
@@ -274,7 +273,7 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                 >
-                  <p className={`text-xl `}>{tSafe('remainingTime')}</p>
+                  <p className={`text-xl `}>{tSafe("remainingTime")}</p>
                   <p className={`text-2xl `}>{timeLeft}</p>
                   <div className="opacity-0">
                     <div

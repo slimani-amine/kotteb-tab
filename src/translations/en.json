@@ -15,5 +15,34 @@
   "dhuhr": "Dhuhr",
   "asr": "Asr",
   "maghrib": "Maghrib",
-  "isha": "Isha"
+  "isha": "Isha",
+  "recitation": {
+    "play": "Play",
+    "pause": "Pause",
+    "next": "Next Verse",
+    "previous": "Previous Verse",
+    "speed": "Playback Speed"
+  },
+  "settings": {
+    "reciter": "Reciter",
+    "translation": "Translation",
+    "mode": "Recitation Mode",
+    "tafseer": "Tafseer"
+  },
+  "actions": {
+    "copy": "Copy",
+    "favorite": "Add to Favorites",
+    "unfavorite": "Remove from Favorites",
+    "share": "Share"
+  },
+  "messages": {
+    "copied": "Verse copied to clipboard",
+    "favoriteAdded": "Added to favorites",
+    "favoriteRemoved": "Removed from favorites",
+    "loading": "Loading Quran content...",
+    "error": "Error loading Quran content"
+  },
+  "aboutUsTitle": "About Us",
+  "aboutUsDescription": "This application provides prayer times, Quran recitation, and Islamic tools to enhance your daily life.",
+  "close": "Close"
 }

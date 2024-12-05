@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   IoSettingsOutline,
   IoVolumeHighOutline,
@@ -25,35 +25,48 @@ export const Settings: React.FC<SettingsProps> = ({
   language,
   setLanguage,
 }) => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [arabicDate, setArabicDate] = useState("");
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
+  // Change language and update i18n
   const changeLanguage = (lng: string) => {
     setLanguage(lng);
     i18n.changeLanguage(lng);
   };
 
-  useEffect(() => {
-    const date = new Date();
-    const options: Intl.DateTimeFormatOptions = {
-      calendar: "islamic",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    const hijriDate = new Intl.DateTimeFormat("ar-SA", options).format(
-      date
-    );
-    setArabicDate(hijriDate);
-  }, []);
+  // Close modal function
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
+  // Effect to handle clicks outside the modal
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        closeModal();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  // Volume change handler
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawVolume = parseFloat(e.target.value);
     const normalizedVolume = rawVolume / 100;
     onVolumeChange(normalizedVolume);
   };
 
+  // Test Adhan sound
   const testAdhan = () => {
     const audio = new Audio("/adhan.mp3");
     audio.volume = volume;
@@ -72,6 +85,7 @@ export const Settings: React.FC<SettingsProps> = ({
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
@@ -86,8 +100,8 @@ export const Settings: React.FC<SettingsProps> = ({
                     onClick={() => changeLanguage(lang)}
                     className={`px-4 py-2 rounded w-1/3 ${
                       language === lang
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-700"
+                        ? "bg-[#FECA30] hover:opacity-80 text-white"
+                        : "bg-gray-200 text-gray-700 "
                     }`}
                   >
                     {lang.toUpperCase()}
@@ -98,7 +112,7 @@ export const Settings: React.FC<SettingsProps> = ({
               {/* Sound Controls */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span>{tSafe('adhanSound')}</span>
+                  <span>{tSafe("adhanSound")}</span>
                   <button onClick={onSoundToggle}>
                     {isSoundEnabled ? (
                       <IoVolumeHighOutline className="h-6 w-6" />
@@ -114,15 +128,15 @@ export const Settings: React.FC<SettingsProps> = ({
                     max="100"
                     value={volume * 100}
                     onChange={handleVolumeChange}
-                    className="w-full"
+                    className="w-full "
                   />
                   <span>{Math.round(volume * 100)}%</span>
                 </div>
                 <button
                   onClick={testAdhan}
-                  className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+                  className="w-full bg-[#FECA30] text-white py-2 rounded hover:opacity-80 transition-colors"
                 >
-                  {tSafe('testAdhan')}
+                  {tSafe("testAdhan")}
                 </button>
               </div>
             </div>

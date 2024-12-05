@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Logo: React.FC = () => {
+export const Logo = ({ className }: { className?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +6,7 @@ const Logo: React.FC = () => {
       height="94"
       viewBox="0 0 95 94"
       fill="none"
+      className={className}
     >
       <g filter="url(#filter0_d_8304_36957)">
         <rect x="16.6641" y="15" width="56" height="56" rx="8" fill="#FFFEFC" />
@@ -80,12 +79,19 @@ const Logo: React.FC = () => {
             type="matrix"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0"
           />
-          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8304_36957" />
-          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8304_36957" result="shape" />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_8304_36957"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_8304_36957"
+            result="shape"
+          />
         </filter>
       </defs>
     </svg>
   );
 };
-
-export default Logo;

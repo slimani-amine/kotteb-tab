@@ -1,11 +1,20 @@
 import { useAxios } from "./Hooks";
 import { useEffect, useState, useRef } from "react";
 import { RANDOM_BG_URL } from "./Urls/index";
-import { Loader, DateTime, Quran, PrayerTimesTab, Settings, HijriDate } from "./Components";
+import {
+  DateTime,
+  Quran,
+  PrayerTimesTab,
+  Settings,
+  HijriDate,
+  EnglishDate,
+  Donate,
+  AboutUs,
+} from "./Components";
 import { ToastContainer } from "react-toastify";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { ResponseType } from "./types";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 const fallbackImages = [
   "/tab-backgrounds/bg1.png",
   "/tab-backgrounds/bg2.jpg",
@@ -28,17 +37,15 @@ export default function App() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const bgRef = useRef<HTMLDivElement | null>(null);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  // Initialize volume as 0.5 (50%)
   const [volume, setVolume] = useState(0.5);
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState("en");
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    // Set initial language when app loads
     i18n.changeLanguage(language);
-  }, [language]);
+  }, [language, i18n]);
 
-  const [res, loading, error] = useAxios({
+  const [res, loading] = useAxios({
     method: "get",
     url: RANDOM_BG_URL,
   });
@@ -52,7 +59,6 @@ export default function App() {
       setBgImage(fetchedImage.url);
       setBgAlt(fetchedImage.name);
     } else if (!fetchedImage?.url && !bgImage) {
-      // Select a random fallback image if no fetched image is available
       const randomIndex = Math.floor(Math.random() * fallbackImages.length);
       setBgImage(fallbackImages[randomIndex]);
       setBgAlt("Fallback Image");
@@ -83,7 +89,8 @@ export default function App() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center font-mono h-full w-screen relative ">
+    <div className="flex flex-col items-center justify-center font-mono min-h-screen w-screen relative">
+      {/* Background Image */}
       <div
         ref={bgRef}
         className="absolute top-0 left-0 w-full h-full bg-black/30"
@@ -101,35 +108,43 @@ export default function App() {
         />
       </div>
 
-      {loading && <Loader />}
-      <div className="flex flex-col z-10">
+      {/* Main Content */}
+      <div className="flex flex-col justify-center items-center z-10 w-full px-4 mt-28">
         <ToastContainer
           position="top-center"
           newestOnTop={true}
           closeOnClick
           pauseOnFocusLoss
         />
-        <div className=" z-10 ">
+        <div className="z-10">
           <HijriDate />
+          <EnglishDate />
           <DateTime />
           <Quran />
-          <PrayerTimesTab 
-            volume={volume} 
-            isSoundEnabled={isSoundEnabled} 
-            onSoundToggle={() => setIsSoundEnabled(prev => !prev)}
-            onVolumeChange={(vol) => setVolume(vol)}
+          <PrayerTimesTab
+            volume={volume}
+            isSoundEnabled={isSoundEnabled}
+            onSoundToggle={() => setIsSoundEnabled((prev) => !prev)}
+            onVolumeChange={(vol: any) => setVolume(vol)}
             language={language}
           />
           <Settings
             isSoundEnabled={isSoundEnabled}
-            onSoundToggle={() => setIsSoundEnabled(prev => !prev)}
+            onSoundToggle={() => setIsSoundEnabled((prev) => !prev)}
             onVolumeChange={setVolume}
             volume={volume}
             language={language}
             setLanguage={setLanguage}
           />
+          <AboutUs />
         </div>
       </div>
+
+      {/* Footer with Donate Component */}
+      <footer className="w-full mt-auto flex items-center justify-center mb-4">
+        <Donate />
+      </footer>
     </div>
   );
 }
+

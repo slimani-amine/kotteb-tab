@@ -7,8 +7,22 @@ export const useDateTime = (): [string, string] => {
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();
-      const date = now.toLocaleDateString(); // Format date as per locale
-      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }); // Format time as HH:mm
+
+      // Format date: 'Wednesday 5 December 2024'
+      const date = new Intl.DateTimeFormat('en-GB', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).format(now);
+
+      // Format time: 'HH:mm'
+      const time = now.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
+
       setDateNow(date);
       setTimeNow(time);
     };

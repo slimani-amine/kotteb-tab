@@ -5,15 +5,13 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import enTranslation from "./translations/en.json";
 import frTranslation from "./translations/fr.json";
 import arTranslation from "./translations/ar.json";
-import enQuran from "./translations/quran/en.json";
-import arQuran from "./translations/quran/ar.json";
+
 
 declare module 'i18next' {
   interface CustomTypeOptions {
     defaultNS: 'common';
     resources: {
       common: typeof enTranslation;
-      quran: typeof enQuran;
     };
   }
 }
@@ -25,14 +23,12 @@ i18n
     resources: {
       en: { 
         common: enTranslation,
-        quran: enQuran
       },
       fr: { 
         common: frTranslation 
       },
       ar: { 
         common: arTranslation,
-        quran: arQuran
       },
     },
     ns: ['common', 'quran'],
