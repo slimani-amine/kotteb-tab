@@ -6,13 +6,16 @@ import { ResponseType } from "../types";
 import { QuranData, QuranSurah, QuranVerse, Recitation } from "../types/quran";
 import { IndexedDBService } from "../services/indexedDB";
 import { QuranModals } from "./Quran/QuranModals";
-import { ErrorMessage, LoadingSpinner } from "./Quran/QuranLoading";
+import { LoadingSpinner } from "./Quran/QuranLoading";
 import { QuranDisplay } from "./Quran/QuranDisplay";
 import { QuranControls } from "./Quran/QuranControls";
 import { QuranAudioPlayer } from "./Quran/QuranAudioPlayer";
 
+interface QuranProps {
+  recitationVolume: number;
+}
 
-export const Quran: React.FC = () => {
+export const Quran: React.FC<QuranProps> = ({ recitationVolume }) => {
   // const [currentReciter, setCurrentReciter] = useState(1);
   const [currentTranslation, setCurrentTranslation] = useState("en");
   // const [recitationMode, setRecitationMode] = useState(1);
@@ -40,7 +43,7 @@ export const Quran: React.FC = () => {
   const [currentVerse, setCurrentVerse] = useState<QuranVerse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [res, error] = useAxios({
+  const [res] = useAxios({
     method: "get",
     url: QURAN,
   });
@@ -274,6 +277,7 @@ export const Quran: React.FC = () => {
             currentVerseStartTime={currentVerse?.startTime}
             onVerseEnd={goToNextVerse}
             playbackSpeed={playbackSpeed}
+            volume={recitationVolume}
           />
         </div>
       )}

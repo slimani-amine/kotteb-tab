@@ -8,6 +8,7 @@ interface QuranAudioPlayerProps {
   currentVerseStartTime?: string;
   onVerseEnd: () => void;
   playbackSpeed: number;
+  volume: number;
 }
 
 export const QuranAudioPlayer: React.FC<QuranAudioPlayerProps> = ({
@@ -18,6 +19,7 @@ export const QuranAudioPlayer: React.FC<QuranAudioPlayerProps> = ({
   currentVerseStartTime,
   onVerseEnd,
   playbackSpeed,
+  volume,
 }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -47,24 +49,32 @@ export const QuranAudioPlayer: React.FC<QuranAudioPlayerProps> = ({
     }
   }, [isPlaying]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
   const timeToSeconds = (timeStr: string) => {
     const [hours, minutes, seconds] = timeStr.split(":").map(parseFloat);
     return hours * 3600 + minutes * 60 + seconds;
   };
 
   return (
-    <audio
-      ref={audioRef}
-      onEnded={onEnded}
-      onTimeUpdate={() => {
-        if (
-          audioRef.current &&
-          currentVerseEndTime &&
-          timeToSeconds(currentVerseEndTime) <= audioRef.current.currentTime
-        ) {
-          onVerseEnd();
-        }
-      }}
-    />
+    <div className="quran-audio-player">
+      <audio
+        ref={audioRef}
+        onEnded={onEnded}
+        onTimeUpdate={() => {
+          if (
+            audioRef.current &&
+            currentVerseEndTime &&
+            timeToSeconds(currentVerseEndTime) <= audioRef.current.currentTime
+          ) {
+            onVerseEnd();
+          }
+        }}
+      />
+    </div>
   );
 };

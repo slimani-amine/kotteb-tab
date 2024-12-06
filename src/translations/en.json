@@ -1,8 +1,9 @@
 {
-  "appName": "NextTab Chrome Extension",
+  "appName": "Kotteb Chrome Extension",
   "hijriDate": "Hijri Date",
   "adhanSound": "Adhan Sound",
-  "volume": "Volume",
+  "adhanvolume": "Volume of Adhan",
+  "recitationVolume":"Recitation Volume",
   "soundOn": "Sound On",
   "soundOff": "Sound Off",
   "testAdhan": "Test Adhan",
@@ -13,6 +14,7 @@
   "fajr": "Fajr",
   "sunrise": "Sunrise",
   "dhuhr": "Dhuhr",
+  "al-Jumuaa": "Al-Jumuaa",
   "asr": "Asr",
   "maghrib": "Maghrib",
   "isha": "Isha",
@@ -36,11 +38,12 @@
       "background": "Background"
     },
     "general": {
-      "visibility": "Component Visibility",
+      "visibility": "Visibility Settings",
       "showDateTime": "Show Date & Time",
-      "showHijriDate": "Show Hijri Date",
       "showPrayerTimes": "Show Prayer Times",
-      "showQuran": "Show Quran"
+      "showQuran": "Show Quran",
+      "language": "Language Settings",
+      "selectLanguage": "Select Language"
     },
     "verse": {
       "recitation": "Recitation Settings",
@@ -89,5 +92,7 @@
   },
   "aboutUsTitle": "About Us",
   "aboutUsDescription": "This application provides prayer times, Quran recitation, and Islamic tools to enhance your daily life.",
-  "close": "Close"
+  "close": "Close",
+  "donate":"Risk of famine looms over children in Gaza!",
+  "donateNow":"Donate Now"
 }

@@ -1,19 +1,98 @@
 {
-  "appName": "Extension Chrome NextTab",
+  "appName": "Extension Chrome Kotteb",
   "hijriDate": "Date Hijri",
-  "adhanSound": "Son Adhan",
-  "volume": "Volume",
+  "adhanSound": "Son de l'Adhan",
+  "adhanvolume": "Volume de l'Adhan",
+  "recitationVolume":"Volume de la lecture",
   "soundOn": "Son Activé",
   "soundOff": "Son Désactivé",
-  "testAdhan": "Tester Adhan",
+  "testAdhan": "Tester l'Adhan",
   "language": "Langue",
   "prayerTimes": "Heures de Prière",
   "loadingPrayerTimes": "Chargement des heures de prière...",
-  "remainingTime": "Reste",
+  "remainingTime": "Temps restant",
   "fajr": "Fajr",
   "sunrise": "Lever du Soleil",
   "dhuhr": "Dhuhr",
+  "al-Jumuaa": "Al-Jumuaa",
   "asr": "Asr",
   "maghrib": "Maghrib",
-  "isha": "Isha"
+  "isha": "Isha",
+  "recitation": {
+    "play": "Lecture",
+    "pause": "Pause",
+    "next": "Verset Suivant",
+    "previous": "Verset Précédent",
+    "speed": "Vitesse de Lecture"
+  },
+  "settings": {
+    "reciter": "Récitateur",
+    "translation": "Traduction",
+    "mode": "Mode de Récitation",
+    "tafseer": "Tafsir",
+    "title": "Paramètres",
+    "tabs": {
+      "general": "Général",
+      "verse": "Versets",
+      "prayer": "Prière",
+      "background": "Fond"
+    },
+    "general": {
+      "visibility": "Paramètres de Visibilité",
+      "showDateTime": "Afficher la Date et l'Heure",
+      "showPrayerTimes": "Afficher les Heures de Prière",
+      "showQuran": "Afficher le Coran",
+      "language": "Paramètres de Langue",
+      "selectLanguage": "Sélectionner une Langue"
+    },
+    "verse": {
+      "recitation": "Paramètres de Récitation",
+      "selectReciter": "Sélectionner un Récitateur",
+      "recitationMode": "Mode de Récitation",
+      "verseMode": "Verset par Verset",
+      "continuousMode": "Continu",
+      "showTranslation": "Afficher la Traduction",
+      "showTafseer": "Afficher le Tafsir",
+      "translationLanguage": "Langue de Traduction"
+    },
+    "prayer": {
+      "location": "Paramètres de Localisation",
+      "country": "Pays",
+      "city": "Ville",
+      "calculationMethod": "Méthode de Calcul",
+      "timeAdjustments": "Ajustements des Heures de Prière",
+      "fajr": "Fajr",
+      "dhuhr": "Dhuhr",
+      "asr": "Asr",
+      "maghrib": "Maghrib",
+      "isha": "Isha",
+      "minutes": "minutes"
+    },
+    "background": {
+      "show": "Afficher le Fond",
+      "blur": "Flou du Fond",
+      "source": "Source du Fond",
+      "useApi": "Utiliser des Images API",
+      "useCustom": "Utiliser une Image Personnalisée",
+      "customImage": "Télécharger une Image Personnalisée"
+    }
+  },
+  "actions": {
+    "copy": "Copier",
+    "favorite": "Ajouter aux Favoris",
+    "unfavorite": "Retirer des Favoris",
+    "share": "Partager"
+  },
+  "messages": {
+    "copied": "Verset copié dans le presse-papiers",
+    "favoriteAdded": "Ajouté aux favoris",
+    "favoriteRemoved": "Retiré des favoris",
+    "loading": "Chargement du contenu du Coran...",
+    "error": "Erreur lors du chargement du contenu du Coran"
+  },
+  "aboutUsTitle": "À Propos de Nous",
+  "aboutUsDescription": "Cette application fournit les horaires de prière, la récitation du Coran et des outils islamiques pour enrichir votre quotidien.",
+  "close": "Fermer",
+  "donate":"Le risque de famine s'approche des enfants de Gaza!",
+  "donateNow":"Faire un don maintenant"
 }

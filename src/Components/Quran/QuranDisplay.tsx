@@ -15,17 +15,15 @@ export const QuranDisplay: React.FC<QuranDisplayProps> = ({
 }) => {
   return (
     <div className="text-center flex flex-col gap-12 ">
-      {/* Show Basmalah except for Surah 9 */}
-      {surahId !== 9 && (
-        <p className="text-[#FECA30] text-[2rem] font-QuranFont">
+      {(surahId !== 1 || verseId !== 1) && (
+        <p className="text-[#FECA30] text-[1.8rem] font-QuranFont">
           {basmalah}
         </p>
       )}
 
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-center gap-4">
-          
-          <p className="text-white text-[3rem] font-QuranFont">
+          <p className="text-white text-[2.5rem] font-QuranFont">
             {verseText}
           </p>
         </div>

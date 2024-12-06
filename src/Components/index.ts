@@ -1,6 +1,6 @@
 export { DateTime } from './DateTime';
 export { HijriDate } from './HijriDate';
-export { EnglishDate } from './EnglishDate';
+export { EnglishDate } from './Date';
 export { default as Quran } from './Quran';
 export { Settings } from './Settings';
 export { PrayerTimesTab } from './PrayerTimes';

@@ -1,6 +1,5 @@
 export interface GeneralSettings {
   showDateTime: boolean;
-  showHijriDate: boolean;
   showPrayerTimes: boolean;
   showQuran: boolean;
 }
@@ -43,7 +42,6 @@ export interface AppSettings {
 export const DEFAULT_SETTINGS: AppSettings = {
   general: {
     showDateTime: true,
-    showHijriDate: true,
     showPrayerTimes: true,
     showQuran: true,
   },

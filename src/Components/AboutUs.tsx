@@ -31,7 +31,7 @@ export const AboutUs: React.FC = () => {
   }, [isOpen]);
 
   return (
-    <div className="absolute bottom-4 left-4">
+    <div className="absolute bottom-4 left-4 z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="bg-black bg-opacity-60 text-white p-3 rounded-full hover:bg-opacity-70 transition-all"

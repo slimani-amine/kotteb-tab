@@ -62,49 +62,6 @@ const BackgroundSettings: React.FC = () => {
         </div>
       </div>
 
-      {/* Background Source */}
-      <div className="space-y-4">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          {tSafe('settings.background.source')}
-        </label>
-        <div className="space-y-2">
-          <label className="inline-flex items-center">
-            <input
-              type="radio"
-              className="form-radio text-[#FECA30]"
-              name="backgroundSource"
-              checked={settings.background.source === 'api'}
-              onChange={() => handleSourceChange('api')}
-            />
-            <span className="ml-2">{tSafe('settings.background.useApi')}</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input
-              type="radio"
-              className="form-radio text-[#FECA30]"
-              name="backgroundSource"
-              checked={settings.background.source === 'custom'}
-              onChange={() => handleSourceChange('custom')}
-            />
-            <span className="ml-2">{tSafe('settings.background.useCustom')}</span>
-          </label>
-        </div>
-      </div>
-
-      {/* Custom Image Upload */}
-      {settings.background.source === 'custom' && (
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {tSafe('settings.background.customImage')}
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleCustomImageChange}
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#FECA30] file:text-white hover:file:opacity-80"
-          />
-        </div>
-      )}
     </div>
   );
 };

@@ -13,15 +13,24 @@ const CALCULATION_METHODS = [
 
 const PRAYER_TIMES = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
 
+const DEFAULT_ADJUSTMENTS = {
+  fajr: 0,
+  dhuhr: 0,
+  asr: 0,
+  maghrib: 0,
+  isha: 0,
+};
+
 const PrayerSettings: React.FC = () => {
   const { t } = useTranslation();
   const { settings, updatePrayerSettings } = useSettings();
+  const adjustments = settings.prayer?.adjustments || DEFAULT_ADJUSTMENTS;
 
   const handleAdjustmentChange = (prayer: typeof PRAYER_TIMES[number], value: string) => {
     const numValue = parseInt(value) || 0;
     updatePrayerSettings({
       adjustments: {
-        ...settings.prayer.adjustments,
+        ...adjustments,
         [prayer]: numValue,
       },
     });
@@ -41,7 +50,7 @@ const PrayerSettings: React.FC = () => {
             </label>
             <input
               type="text"
-              value={settings.prayer.country}
+              value={settings.prayer?.country || ''}
               onChange={(e) => updatePrayerSettings({ country: e.target.value })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FECA30] focus:ring-[#FECA30] sm:text-sm"
             />
@@ -52,7 +61,7 @@ const PrayerSettings: React.FC = () => {
             </label>
             <input
               type="text"
-              value={settings.prayer.city}
+              value={settings.prayer?.city || ''}
               onChange={(e) => updatePrayerSettings({ city: e.target.value })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FECA30] focus:ring-[#FECA30] sm:text-sm"
             />
@@ -66,7 +75,7 @@ const PrayerSettings: React.FC = () => {
           {tSafe('settings.prayer.calculationMethod')}
         </h3>
         <select
-          value={settings.prayer.calculationMethod}
+          value={settings.prayer?.calculationMethod || 'MWL'}
           onChange={(e) => updatePrayerSettings({ calculationMethod: e.target.value })}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FECA30] focus:ring-[#FECA30] sm:text-sm"
         >
@@ -92,15 +101,13 @@ const PrayerSettings: React.FC = () => {
               <div className="mt-1 flex rounded-md shadow-sm">
                 <input
                   type="number"
-                  value={settings.prayer.adjustments[prayer]}
+                  value={adjustments[prayer]}
                   onChange={(e) => handleAdjustmentChange(prayer, e.target.value)}
                   min="-60"
                   max="60"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FECA30] focus:ring-[#FECA30] sm:text-sm"
                 />
-                <span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
-                  {tSafe('settings.prayer.minutes')}
-                </span>
+
               </div>
             </div>
           ))}

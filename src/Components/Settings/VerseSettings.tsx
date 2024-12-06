@@ -10,9 +10,18 @@ const RECITERS = [
   { id: 'Abu_Bakr_Ash-Shaatree', name: 'Abu Bakr Ash-Shaatree' },
 ];
 
+const DEFAULT_VERSE_SETTINGS = {
+  reciterId: 'Abdul_Basit_Murattal',
+  recitationMode: 'verse' as const,
+  showTranslation: true,
+  showTafseer: false,
+  translationLanguage: 'en',
+};
+
 const VerseSettings: React.FC = () => {
   const { t } = useTranslation();
   const { settings, updateVerseSettings } = useSettings();
+  const verseSettings = settings.verse || DEFAULT_VERSE_SETTINGS;
 
   return (
     <div className="space-y-6">
@@ -27,7 +36,7 @@ const VerseSettings: React.FC = () => {
             {tSafe('settings.verse.selectReciter')}
           </label>
           <select
-            value={settings.verse.reciterId}
+            value={verseSettings.reciterId}
             onChange={(e) => updateVerseSettings({ reciterId: e.target.value })}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FECA30] focus:ring-[#FECA30] sm:text-sm dark:bg-gray-700 dark:border-gray-600"
           >
@@ -51,8 +60,8 @@ const VerseSettings: React.FC = () => {
                 className="form-radio text-[#FECA30]"
                 name="recitationMode"
                 value="verse"
-                checked={settings.verse.recitationMode === 'verse'}
-                onChange={(e) => updateVerseSettings({ recitationMode: 'verse' })}
+                checked={verseSettings.recitationMode === 'verse'}
+                onChange={() => updateVerseSettings({ recitationMode: 'verse' })}
               />
               <span className="ml-2">{tSafe('settings.verse.verseMode')}</span>
             </label>
@@ -62,8 +71,8 @@ const VerseSettings: React.FC = () => {
                 className="form-radio text-[#FECA30]"
                 name="recitationMode"
                 value="continuous"
-                checked={settings.verse.recitationMode === 'continuous'}
-                onChange={(e) => updateVerseSettings({ recitationMode: 'continuous' })}
+                checked={verseSettings.recitationMode === 'continuous'}
+                onChange={() => updateVerseSettings({ recitationMode: 'continuous' })}
               />
               <span className="ml-2">{tSafe('settings.verse.continuousMode')}</span>
             </label>
@@ -77,7 +86,7 @@ const VerseSettings: React.FC = () => {
               {tSafe('settings.verse.showTranslation')}
             </label>
             <Switch
-              checked={settings.verse.showTranslation}
+              checked={verseSettings.showTranslation}
               onCheckedChange={(checked) => updateVerseSettings({ showTranslation: checked })}
             />
           </div>
@@ -86,7 +95,7 @@ const VerseSettings: React.FC = () => {
               {tSafe('settings.verse.showTafseer')}
             </label>
             <Switch
-              checked={settings.verse.showTafseer}
+              checked={verseSettings.showTafseer}
               onCheckedChange={(checked) => updateVerseSettings({ showTafseer: checked })}
             />
           </div>
@@ -98,7 +107,7 @@ const VerseSettings: React.FC = () => {
             {tSafe('settings.verse.translationLanguage')}
           </label>
           <select
-            value={settings.verse.translationLanguage}
+            value={verseSettings.translationLanguage}
             onChange={(e) => updateVerseSettings({ translationLanguage: e.target.value })}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FECA30] focus:ring-[#FECA30] sm:text-sm dark:bg-gray-700 dark:border-gray-600"
           >

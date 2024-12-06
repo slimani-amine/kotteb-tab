@@ -55,7 +55,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl overflow-hidden"
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl  overflow-hidden"
           >
             {/* Header */}
             <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
@@ -65,7 +65,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             </div>
 
             {/* Tabs */}
-            <div className="flex border-b border-gray-200 dark:border-gray-700">
+            <div className="flex border-b border-gray-200 dark:border-gray-700 ">
               {SettingsTabs.map(({ id, label }) => (
                 <button
                   key={id}
@@ -82,7 +82,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             </div>
 
             {/* Content */}
-            <div className="p-6">
+            <div className="p-6 h-[250px] overflow-y-auto">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTab}

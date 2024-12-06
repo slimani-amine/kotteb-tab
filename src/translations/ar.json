@@ -1,18 +1,20 @@
 {
-  "appName": "ملحق كروم نكست تاب",
+  "appName": "إضافة كُتَّاب",
   "hijriDate": "التاريخ الهجري",
   "adhanSound": "صوت الأذان",
-  "volume": "الصوت",
-  "soundOn": "الصوت مفعل",
-  "soundOff": "الصوت معطل",
-  "testAdhan": "اختبار الأذان",
+  "adhanvolume": "مستوى صوت الأذان",
+  "recitationVolume":"مستوى صوت التلاوة",
+  "soundOn": "تشغيل الصوت",
+  "soundOff": "إيقاف الصوت",
+  "testAdhan": "تجربة الأذان",
   "language": "اللغة",
   "prayerTimes": "أوقات الصلاة",
-  "loadingPrayerTimes": "جارٍ تحميل أوقات الصلاة...",
-  "remainingTime": "متبقي",
+  "loadingPrayerTimes": "جاري تحميل أوقات الصلاة...",
+  "remainingTime": "الوقت المتبقي",
   "fajr": "الفجر",
-  "sunrise": "شروق الشمس",
+  "sunrise": "الشروق",
   "dhuhr": "الظهر",
+  "al-Jumuaa": "الجمعة",
   "asr": "العصر",
   "maghrib": "المغرب",
   "isha": "العشاء",
@@ -24,19 +26,24 @@
     "speed": "سرعة التلاوة"
   },
   "settings": {
+    "reciter": "القارئ",
+    "translation": "الترجمة",
+    "mode": "وضع التلاوة",
+    "tafseer": "التفسير",
     "title": "الإعدادات",
+    "general": {
+      "visibility": "إعدادات العرض",
+      "showDateTime": "عرض التاريخ والوقت",
+      "showPrayerTimes": "عرض أوقات الصلاة",
+      "showQuran": "عرض القرآن",
+      "language": "إعدادات اللغة",
+      "selectLanguage": "اختر اللغة"
+    },
     "tabs": {
       "general": "عام",
       "verse": "الآيات",
       "prayer": "الصلاة",
       "background": "الخلفية"
-    },
-    "general": {
-      "visibility": "إظهار المكونات",
-      "showDateTime": "إظهار التاريخ والوقت",
-      "showHijriDate": "إظهار التاريخ الهجري",
-      "showPrayerTimes": "إظهار أوقات الصلاة",
-      "showQuran": "إظهار القرآن"
     },
     "verse": {
       "recitation": "إعدادات التلاوة",
@@ -68,11 +75,7 @@
       "useApi": "استخدام صور من الإنترنت",
       "useCustom": "استخدام صورة مخصصة",
       "customImage": "رفع صورة مخصصة"
-    },
-    "reciter": "القارئ",
-    "translation": "الترجمة",
-    "mode": "نمط التلاوة",
-    "tafseer": "التفسير"
+    }
   },
   "actions": {
     "copy": "نسخ",
@@ -89,5 +92,7 @@
   },
   "aboutUsTitle": "من نحن",
   "aboutUsDescription": "يوفر هذا التطبيق أوقات الصلاة، تلاوة القرآن، وأدوات إسلامية لتحسين حياتك اليومية.",
-  "close": "إغلاق"
+  "close": "إغلاق",
+  "donate":"الخطر من الفقر للأطفال في غزة!",
+  "donateNow":"تبرع الان"
 }

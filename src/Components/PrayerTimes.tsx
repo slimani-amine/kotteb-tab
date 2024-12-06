@@ -9,7 +9,6 @@ interface PrayerTimesTabProps {
   volume: number;
   isSoundEnabled: boolean;
   language?: string;
-  onVolumeChange?: (volume: number) => void;
   onSoundToggle: () => void;
 }
 
@@ -46,13 +45,13 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
   volume,
   isSoundEnabled,
   language = "en",
-  onVolumeChange,
   onSoundToggle,
 }) => {
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
   const [prayerTimes, setPrayerTimes] = useState<any>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [nextPrayer, setNextPrayer] = useState<any>(null);
+  const [isFriday, setIsFriday] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [remainingTimeInMinutes, setRemainingTimeInMinutes] = useState(0);
   const [totalTimeForNextPrayerInMinutes, setTotalTimeForNextPrayerInMinutes] =
@@ -60,12 +59,6 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
 
   // Add a ref to handle the adhan sound
   const adhanAudio = new Audio("/adhan.mp3");
-
-  useEffect(() => {
-    if (onVolumeChange) {
-      adhanAudio.volume = volume;
-    }
-  }, [volume, onVolumeChange, adhanAudio]);
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -104,6 +97,9 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
 
       setPrayerTimes(times);
 
+      const today = new Date();
+      const isFriday = today.getDay() === 5;
+      setIsFriday(isFriday);
       const prayers = [
         { time: times.fajr, name: Prayer.Fajr },
         { time: times.sunrise, name: Prayer.Sunrise },
@@ -154,6 +150,7 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
           Math.abs(prayer.time.getTime() - currentTime.getTime()) < 10000 &&
           isSoundEnabled // 10 seconds margin
         ) {
+          adhanAudio.volume = volume;
           adhanAudio.play();
         }
       });
@@ -257,7 +254,9 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
                   isNextPrayer ? "group-hover:opacity-0 text-yellow-300" : ""
                 }`}
               >
-                {tSafe(prayer.name.toLowerCase())}
+                {isFriday && prayer.name === "Dhuhr"
+                  ? tSafe("al-Jumuaa")
+                  : tSafe(prayer.name.toLowerCase())}
               </motion.p>
               <p
                 className={`text-2xl text-white ${
