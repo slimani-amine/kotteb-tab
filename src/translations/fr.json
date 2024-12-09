@@ -69,12 +69,13 @@
       "minutes": "minutes"
     },
     "background": {
-      "show": "Afficher le Fond",
-      "blur": "Flou du Fond",
+      "show": "Afficher l'arrière-plan",
+      "blur": "Flou de l'arrière-plan",
       "source": "Source du Fond",
       "useApi": "Utiliser des Images API",
       "useCustom": "Utiliser une Image Personnalisée",
-      "customImage": "Télécharger une Image Personnalisée"
+      "customImage": "Télécharger une Image Personnalisée",
+      "color": "Degré du Couleur"
     }
   },
   "actions": {
@@ -90,8 +91,18 @@
     "loading": "Chargement du contenu du Coran...",
     "error": "Erreur lors du chargement du contenu du Coran"
   },
+  "about": {
+    "title": "À propos",
+    "description": "Cette application fournit les heures de prière, la récitation du Coran et des outils islamiques pour enrichir votre vie quotidienne."
+  },
   "aboutUsTitle": "À Propos de Nous",
   "aboutUsDescription": "Cette application fournit les horaires de prière, la récitation du Coran et des outils islamiques pour enrichir votre quotidien.",
+  "favorites": {
+    "title": "Favoris",
+    "surah": "Sourate",
+    "verse": "Verset",
+    "empty": "Pas encore de favoris"
+  },
   "close": "Fermer",
   "donate":"Le risque de famine s'approche des enfants de Gaza!",
   "donateNow":"Faire un don maintenant"

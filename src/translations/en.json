@@ -74,7 +74,8 @@
       "source": "Background Source",
       "useApi": "Use API Images",
       "useCustom": "Use Custom Image",
-      "customImage": "Upload Custom Image"
+      "customImage": "Upload Custom Image",
+      "color": "Background Color"
     }
   },
   "actions": {
@@ -89,6 +90,16 @@
     "favoriteRemoved": "Removed from favorites",
     "loading": "Loading Quran content...",
     "error": "Error loading Quran content"
+  },
+  "about": {
+    "title": "About",
+    "description": "This application provides prayer times, Quran recitation, and Islamic tools to enhance your daily life."
+  },
+  "favorites": {
+    "title": "Favorites",
+    "surah": "Surah",
+    "verse": "Verse",
+    "empty": "No favorites yet"
   },
   "aboutUsTitle": "About Us",
   "aboutUsDescription": "This application provides prayer times, Quran recitation, and Islamic tools to enhance your daily life.",

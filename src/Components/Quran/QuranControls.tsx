@@ -9,7 +9,6 @@ import {
   MdTranslate,
   MdInfoOutline,
   MdContentCopy,
-  MdInfo,
 } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 

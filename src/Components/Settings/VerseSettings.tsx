@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSettings } from '../../contexts/SettingsContext';
 import { Switch } from '../ui/Switch';
 import { tSafe } from '../../translations/i18nHelper';
@@ -19,7 +18,6 @@ const DEFAULT_VERSE_SETTINGS = {
 };
 
 const VerseSettings: React.FC = () => {
-  const { t } = useTranslation();
   const { settings, updateVerseSettings } = useSettings();
   const verseSettings = settings.verse || DEFAULT_VERSE_SETTINGS;
 

@@ -163,7 +163,7 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="flex justify-center items-center h-screen"
+        className="flex justify-center items-center text-white text-2xl font-bold"
       >
         {tSafe("loadingPrayerTimes")}
       </motion.div>
@@ -247,7 +247,9 @@ export const PrayerTimesTab: React.FC<PrayerTimesTabProps> = ({
           return (
             <motion.div
               key={prayer.name}
-              className="relative flex flex-col items-center justify-center text-center gap-1 text-white group cursor-pointer"
+              className={`relative flex flex-col items-center justify-center text-center gap-1 text-white group  ${
+                isNextPrayer ? "cursor-pointer" : "select-none"
+              }`}
             >
               <motion.p
                 className={`text-xl text-white ${

@@ -8,7 +8,6 @@ export const useDateTime = (): [string, string] => {
     const updateDateTime = () => {
       const now = new Date();
 
-      // Format date: 'Wednesday 5 December 2024'
       const date = new Intl.DateTimeFormat('en-GB', {
         weekday: 'long',
         day: 'numeric',
@@ -16,7 +15,6 @@ export const useDateTime = (): [string, string] => {
         year: 'numeric',
       }).format(now);
 
-      // Format time: 'HH:mm'
       const time = now.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
@@ -28,8 +26,8 @@ export const useDateTime = (): [string, string] => {
     };
 
     updateDateTime();
-    const interval = setInterval(updateDateTime, 1000); // Update every second
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    const interval = setInterval(updateDateTime, 1000); 
+    return () => clearInterval(interval);
   }, []);
 
   return [dateNow, timeNow];

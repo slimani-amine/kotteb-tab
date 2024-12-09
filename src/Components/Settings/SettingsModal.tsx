@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { useSettings } from '../../contexts/SettingsContext';
 import GeneralSettings from './GeneralSettings';
 import VerseSettings from './VerseSettings';
 import PrayerSettings from './PrayerSettings';
@@ -23,9 +21,7 @@ const SettingsTabs = [
 type SettingsTab = typeof SettingsTabs[number]['id'];
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
-  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<SettingsTab>('general');
-  const { settings } = useSettings();
 
   const renderTabContent = () => {
     switch (activeTab) {

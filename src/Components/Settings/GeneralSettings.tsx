@@ -5,7 +5,7 @@ import { Switch } from '../ui/Switch';
 import { tSafe } from '../../translations/i18nHelper';
 
 const GeneralSettings: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { settings, updateGeneralSettings } = useSettings();
 
   const handleToggle = (key: keyof typeof settings.general) => {

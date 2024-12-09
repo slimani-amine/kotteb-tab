@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import { toast } from "react-toastify";
 import { useAxios } from "../Hooks";
 import { QURAN } from "../Urls";
@@ -15,14 +15,18 @@ interface QuranProps {
   recitationVolume: number;
 }
 
-export const Quran: React.FC<QuranProps> = ({ recitationVolume }) => {
+export interface QuranRef {
+  navigateToVerse: (surah: number, verse: number) => void;
+}
+
+export const Quran = forwardRef<QuranRef, QuranProps>(({ recitationVolume }, ref) => {
   // const [currentReciter, setCurrentReciter] = useState(1);
   const [currentTranslation, setCurrentTranslation] = useState("en");
   // const [recitationMode, setRecitationMode] = useState(1);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [favorites, setFavorites] = useState<Array<{ surah: number; verse: number }>>([]);
+  const [favorites, setFavorites] = useState<Array<{ id: string; surah: number; verse: number; text: string }>>([]);
   const [showSettings, setShowSettings] = useState(false);
   const [showTranslation, setShowTranslation] = useState(false);
   const [showTafseer, setShowTafseer] = useState(false);
@@ -199,27 +203,38 @@ export const Quran: React.FC<QuranProps> = ({ recitationVolume }) => {
     }
   };
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = async () => {
     if (!currentSurah || !currentVerse) return;
 
     const favoriteItem = {
+      id: `${currentSurah.surahId}:${currentVerse.verseId}`,
       surah: currentSurah.surahId,
       verse: currentVerse.verseId,
+      text: currentVerse.text,
     };
 
-    if (isFavorite) {
-      setFavorites(
-        favorites.filter(
-          (fav) => !(fav.surah === favoriteItem.surah && fav.verse === favoriteItem.verse)
-        )
-      );
-      toast.info("Verse removed from favorites");
-    } else {
-      setFavorites([...favorites, favoriteItem]);
-      toast.success("Verse added to favorites");
+    try {
+      if (isFavorite) {
+        await IndexedDBService.removeFavorite(favoriteItem.surah, favoriteItem.verse);
+        setFavorites((prevFavorites) =>
+          prevFavorites.filter((fav) => fav.id !== favoriteItem.id)
+        );
+        setIsFavorite(false);
+        toast.info("Verse removed from favorites");
+      } else {
+        await IndexedDBService.saveFavorite(
+          favoriteItem.surah,
+          favoriteItem.verse,
+          favoriteItem.text
+        );
+        setFavorites((prevFavorites) => [...prevFavorites, favoriteItem]);
+        setIsFavorite(true);
+        toast.success("Verse added to favorites");
+      }
+    } catch (error) {
+      console.error("Error managing favorites:", error);
+      toast.error("Error managing favorites");
     }
-
-    setIsFavorite(!isFavorite);
   };
 
   const handleCopyToClipboard = () => {
@@ -228,6 +243,50 @@ export const Quran: React.FC<QuranProps> = ({ recitationVolume }) => {
     navigator.clipboard.writeText(text);
     toast.success("Verse copied to clipboard!");
   };
+
+  const handleVerseNavigation = (surah: number, verse: number) => {
+    const nextSurah = currentRecitation?.surah.find((s) => s.surahId === surah);
+    if (nextSurah) {
+      setCurrentSurah(nextSurah);
+      const nextVerse = nextSurah.verses.find((v) => v.verseId === verse);
+      if (nextVerse) {
+        setCurrentVerse(nextVerse);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      try {
+        const favs = await IndexedDBService.getFavorites();
+        setFavorites(favs);
+      } catch (error) {
+        console.error("Error loading favorites:", error);
+      }
+    };
+    loadFavorites();
+  }, []);
+
+  useEffect(() => {
+    const checkFavorite = async () => {
+      if (currentSurah && currentVerse) {
+        try {
+          const isFav = await IndexedDBService.isFavorite(
+            currentSurah.surahId,
+            currentVerse.verseId
+          );
+          setIsFavorite(isFav);
+        } catch (error) {
+          console.error("Error checking favorite status:", error);
+        }
+      }
+    };
+    checkFavorite();
+  }, [currentSurah?.surahId, currentVerse?.verseId]);
+
+  useImperativeHandle(ref, () => ({
+    navigateToVerse: handleVerseNavigation
+  }));
 
   return (
     <div className="flex justify-center m-0">
@@ -247,7 +306,7 @@ export const Quran: React.FC<QuranProps> = ({ recitationVolume }) => {
 
       {isLoading ? (
         <LoadingSpinner />
-      )  : (
+      ) : (
         <div className="bg-black bg-opacity-60 rounded-lg p-6 w-[1200px] text-white">
           <QuranDisplay
             basmalah={basmalah}
@@ -283,6 +342,5 @@ export const Quran: React.FC<QuranProps> = ({ recitationVolume }) => {
       )}
     </div>
   );
-};
+});
 
-export default Quran;

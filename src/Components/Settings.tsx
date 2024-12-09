@@ -6,6 +6,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { tSafe } from "../translations/i18nHelper";
 import { SettingsModal } from "./Settings/SettingsModal";
+import { useTranslation } from "react-i18next";
 
 interface SettingsProps {
   onVolumeChange: (volume: number) => void;
@@ -24,6 +25,8 @@ export const Settings: React.FC<SettingsProps> = ({
   language,
   setLanguage,
 }) => {
+  const { i18n } = useTranslation();
+  const isRTL = i18n.language === "ar";
   const [isOpen, setIsOpen] = useState(false);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -115,13 +118,13 @@ export const Settings: React.FC<SettingsProps> = ({
           onClick={() => setIsVolumeOpen(!isVolumeOpen)}
           className="bg-black bg-opacity-60 text-white p-3 rounded-full hover:bg-opacity-70 transition-all"
         >
-          <IoVolumeHighOutline className="h-6 w-6" />
+          <IoVolumeHighOutline className="h-6 w-6" title={isRTL ? "الصوت" : "Volume"}/>
         </button>
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="bg-black bg-opacity-60 text-white p-3 rounded-full hover:bg-opacity-70 transition-all"
         >
-          <IoSettingsOutline className="h-6 w-6" />
+          <IoSettingsOutline className="h-6 w-6" title={isRTL ? "الإعدادات" : "Settings"}/>
         </button>
       </div>
 

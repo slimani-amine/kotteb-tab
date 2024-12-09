@@ -30,6 +30,7 @@ export interface BackgroundSettings {
   blur: number;
   source: 'api' | 'custom';
   customImageUrl?: string;
+  backgroundColor: string;
 }
 
 export interface AppSettings {
@@ -49,7 +50,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
     reciterId: 'Abdul_Basit_Murattal',
     recitationMode: 'verse',
     showTranslation: true,
-    showTafseer: false,
+    showTafseer: true,
     translationLanguage: 'en',
   },
   prayer: {
@@ -68,5 +69,6 @@ export const DEFAULT_SETTINGS: AppSettings = {
     show: true,
     blur: 0,
     source: 'api',
+    backgroundColor: '#000000',
   },
 };

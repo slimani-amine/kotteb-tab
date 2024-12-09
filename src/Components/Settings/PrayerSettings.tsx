@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSettings } from '../../contexts/SettingsContext';
 import { tSafe } from '../../translations/i18nHelper';
 
@@ -22,7 +21,6 @@ const DEFAULT_ADJUSTMENTS = {
 };
 
 const PrayerSettings: React.FC = () => {
-  const { t } = useTranslation();
   const { settings, updatePrayerSettings } = useSettings();
   const adjustments = settings.prayer?.adjustments || DEFAULT_ADJUSTMENTS;
 

@@ -15,9 +15,13 @@ interface QuranDB extends DBSchema {
     key: string;
     value: QuranData;
   };
+  favorites: {
+    key: string;
+    value: { id: string; surah: number; verse: number; text: string };
+  };
 }
 
-const dbPromise = openDB<QuranDB>("quran-db", 2, {
+const dbPromise = openDB<QuranDB>("quran-db", 3, {
   upgrade(db, oldVersion) {
     if (oldVersion < 1) {
       const ayahStore = db.createObjectStore("ayahs", {
@@ -30,6 +34,9 @@ const dbPromise = openDB<QuranDB>("quran-db", 2, {
     }
     if (oldVersion < 2) {
       db.createObjectStore("quranData");
+    }
+    if (oldVersion < 3) {
+      db.createObjectStore("favorites", { keyPath: "id" });
     }
   },
 });
@@ -98,5 +105,29 @@ export const IndexedDBService = {
     const db = await dbPromise;
     const volume = await db.get("settings", "recitationVolume");
     return volume ?? 0.5; // Default to 0.5 if not set
+  },
+
+  async saveFavorite(surah: number, verse: number, text: string) {
+    const db = await dbPromise;
+    const id = `${surah}:${verse}`;
+    await db.put("favorites", { id, surah, verse, text });
+  },
+
+  async removeFavorite(surah: number, verse: number) {
+    const db = await dbPromise;
+    const id = `${surah}:${verse}`;
+    await db.delete("favorites", id);
+  },
+
+  async getFavorites() {
+    const db = await dbPromise;
+    return await db.getAll("favorites");
+  },
+
+  async isFavorite(surah: number, verse: number) {
+    const db = await dbPromise;
+    const id = `${surah}:${verse}`;
+    const favorite = await db.get("favorites", id);
+    return !!favorite;
   },
 };

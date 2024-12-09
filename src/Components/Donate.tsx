@@ -9,6 +9,7 @@ export const Donate: React.FC = () => {
         <a
           href="https://help.unicef.org/mena/donate-to-children?gad_source=1&gclid=Cj0KCQiAu8W6BhC-ARIsACEQoDAjJBm5kpW8sFLQUVPIVpUOouzYs18llk1MDfrCO0meK0qL9RX_ozEaAoOjEALw_wcB"
           target="_blank"
+          rel="noopener noreferrer"
           className="text-[#FECA30] hover:underline font-bold"
         >
           {tSafe("donateNow")}
